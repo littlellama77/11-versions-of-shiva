@@ -9,9 +9,15 @@
   'use strict';
 
   // --- Storage Keys ---
-  const STORAGE_PHOTOS_KEY = 'shiva_keepsake_photos_v1';
-  const STORAGE_LETTERS_KEY = 'shiva_keepsake_custom_letters_v1';
   const STORAGE_ATMOSPHERE_KEY = 'shiva_keepsake_atmosphere_v1';
+
+  // Clear any old editing overrides from prior test sessions so the book is always pristine
+  try {
+    localStorage.removeItem('shiva_keepsake_photos_v1');
+    localStorage.removeItem('shiva_keepsake_custom_letters_v1');
+  } catch (e) {
+    // Ignore storage errors
+  }
 
   // --- State Variables ---
   let currentPage = 0; // 0: Cover, 1: TOC, 2..N+1: Chapters, N+2: Epilogue
@@ -19,82 +25,10 @@
   let musicEnabled = false;
   let audioCtx = null;
   let musicInterval = null;
-  let activeUploadTargetId = null;
-  let currentAtmosphere = localStorage.getItem(STORAGE_ATMOSPHERE_KEY) || 'default';
+  let currentAtmosphere = localStorage.getItem(STORAGE_ATMOSPHERE_KEY) || 'candlelight';
 
-  // --- Photo LocalStorage Management ---
-  function getSavedPhotos() {
-    try {
-      const data = localStorage.getItem(STORAGE_PHOTOS_KEY);
-      return data ? JSON.parse(data) : {};
-    } catch (e) {
-      console.warn('LocalStorage photo retrieval error:', e);
-      return {};
-    }
-  }
-
-  function savePhoto(photoId, dataUrl) {
-    try {
-      const current = getSavedPhotos();
-      current[photoId] = dataUrl;
-      localStorage.setItem(STORAGE_PHOTOS_KEY, JSON.stringify(current));
-    } catch (e) {
-      console.warn('LocalStorage save error:', e);
-      alert('Photo is quite large for browser memory, but will be shown for this session!');
-    }
-  }
-
-  function removePhoto(photoId) {
-    try {
-      const current = getSavedPhotos();
-      delete current[photoId];
-      localStorage.setItem(STORAGE_PHOTOS_KEY, JSON.stringify(current));
-    } catch (e) {
-      console.warn('LocalStorage remove error:', e);
-    }
-  }
-
-  function clearAllPhotos() {
-    try {
-      localStorage.removeItem(STORAGE_PHOTOS_KEY);
-    } catch (e) {
-      console.warn('LocalStorage clear error:', e);
-    }
-  }
-
-  // --- Letters & Memories LocalStorage Management ---
-  function getCustomLetters() {
-    try {
-      const data = localStorage.getItem(STORAGE_LETTERS_KEY);
-      return data ? JSON.parse(data) : null;
-    } catch (e) {
-      console.warn('LocalStorage letters retrieval error:', e);
-      return null;
-    }
-  }
-
-  function saveCustomLetters(chapters) {
-    try {
-      localStorage.setItem(STORAGE_LETTERS_KEY, JSON.stringify(chapters));
-    } catch (e) {
-      console.warn('LocalStorage custom letters save error:', e);
-    }
-  }
-
-  function revertCustomLetters() {
-    try {
-      localStorage.removeItem(STORAGE_LETTERS_KEY);
-    } catch (e) {
-      console.warn('LocalStorage revert error:', e);
-    }
-  }
-
-  // Active Chapters (defaults merged with custom updates)
+  // Active Chapters are pristine and immutable
   function getActiveChapters() {
-    const custom = getCustomLetters();
-    if (custom && Array.isArray(custom) && custom.length > 0) {
-      return custom;
-    }
     return window.BOOK_DATA.chapters;
   }
 
@@ -148,43 +82,14 @@
   const closeTocModalBtn = document.getElementById('closeTocModalBtn');
   const modalTocList = document.getElementById('modalTocList');
 
-  const openPhotosBtn = document.getElementById('openPhotosBtn');
-  const photosModal = document.getElementById('photosModal');
-  const closePhotosModalBtn = document.getElementById('closePhotosModalBtn');
-  const photoSlotGrid = document.getElementById('photoSlotGrid');
-  const resetAllPhotosBtn = document.getElementById('resetAllPhotosBtn');
-  const exportPhotosBtn = document.getElementById('exportPhotosBtn');
-  const importPhotosBtn = document.getElementById('importPhotosBtn');
-  const importPhotosInput = document.getElementById('importPhotosInput');
-
-  const openLettersBtn = document.getElementById('openLettersBtn');
-  const lettersModal = document.getElementById('lettersModal');
-  const closeLettersModalBtn = document.getElementById('closeLettersModalBtn');
-  const lettersChapterSelect = document.getElementById('lettersChapterSelect');
-  const addNewChapterBtn = document.getElementById('addNewChapterBtn');
-  const editAuthorName = document.getElementById('editAuthorName');
-  const editSubtitle = document.getElementById('editSubtitle');
-  const editHighlight = document.getElementById('editHighlight');
-  const editAnnotations = document.getElementById('editAnnotations');
-  const editLetterText = document.getElementById('editLetterText');
-  const saveLetterBtn = document.getElementById('saveLetterBtn');
-  const revertLetterBtn = document.getElementById('revertLetterBtn');
-  const exportLettersJsonBtn = document.getElementById('exportLettersJsonBtn');
-  const importLettersJsonBtn = document.getElementById('importLettersJsonBtn');
-  const importLettersInput = document.getElementById('importLettersInput');
-  const copyLettersCodeBtn = document.getElementById('copyLettersCodeBtn');
-
   const lightboxModal = document.getElementById('lightboxModal');
   const closeLightboxBtn = document.getElementById('closeLightboxBtn');
+  const lightboxCloseActionBtn = document.getElementById('lightboxCloseActionBtn');
   const lightboxImgWrapper = document.getElementById('lightboxImgWrapper');
   const lightboxPerson = document.getElementById('lightboxPerson');
   const lightboxCaption = document.getElementById('lightboxCaption');
-  const lightboxReplaceBtn = document.getElementById('lightboxReplaceBtn');
   const lightboxDownloadBtn = document.getElementById('lightboxDownloadBtn');
-  const lightboxRemoveBtn = document.getElementById('lightboxRemoveBtn');
   let currentLightboxPhoto = null;
-
-  const directPhotoInput = document.getElementById('directPhotoInput');
 
   // Mobile Tabs
   const mobileTabs = document.getElementById('mobileTabs');
@@ -643,47 +548,28 @@
     });
   }
 
-  // --- Render Chapter Spread (Left Scrapbook + Right Full Letter) ---
+  // --- Render Chapter Spread (Left Scrapbook + Right Wholesome Live Letter) ---
   function renderChapterSpread(chapterIndex) {
     const chapters = getActiveChapters();
     const ch = chapters[chapterIndex];
     if (!ch) return;
 
-    const savedPhotos = getSavedPhotos();
-
-    // 1. Build Polaroids for Left Page
+    // 1. Build Polaroids for Left Scrapbook Page
     let polaroidsHtml = '';
-    const photosList = ch.photos || [
-      { id: `${ch.id}-photo-1`, label: `${ch.name} PHOTO`, caption: ch.subtitle, src: '' }
-    ];
+    const photosList = ch.photos || [];
 
     photosList.forEach((photo, pIdx) => {
-      const uploadedImg = savedPhotos[photo.id] || photo.src;
       const tapeClass = (pIdx % 2 === 1) ? 'washi-tape alt' : 'washi-tape';
-
-      let innerContent = '';
-      if (uploadedImg) {
-        innerContent = `<img src="${uploadedImg}" alt="${photo.label}" class="polaroid-img">`;
-      } else {
-        innerContent = `
-          <div class="polaroid-placeholder-inner">
-            <span class="placeholder-icon">📸</span>
-            <span class="placeholder-label">${photo.label}</span>
-            <span class="placeholder-action">+ Add / Replace Photo</span>
-          </div>
-        `;
-      }
-
       polaroidsHtml += `
-        <div class="polaroid-card ${uploadedImg ? 'has-photo' : 'empty-frame'}" 
+        <div class="polaroid-card has-photo" 
              data-photo-id="${photo.id}" 
              data-photo-label="${escapeHtml(photo.label)}"
              data-photo-caption="${escapeHtml(photo.caption)}"
-             data-has-img="${uploadedImg ? 'true' : 'false'}"
-             title="${uploadedImg ? 'Click to view photo or replace' : 'Click or drag & drop photo here'}">
+             data-photo-src="${photo.src}"
+             title="Click to view keepsake photo ♡">
           <div class="${tapeClass}"></div>
           <div class="polaroid-photo-frame">
-            ${innerContent}
+            <img src="${photo.src}" alt="${escapeHtml(photo.label)}" class="polaroid-img" loading="lazy">
           </div>
           <div class="polaroid-caption">${escapeHtml(photo.caption)}</div>
         </div>
@@ -782,32 +668,75 @@
       </div>
     `;
 
-    // 4. Build Right Page (Letter - Strictly preserving verbatim nuance)
+    // 4. Build Right Page (Wholesome & Cozy Live Letter)
     const formattedParagraphs = (ch.letterText || '')
       .split('\n\n')
-      .map(p => `<p>${escapeHtmlWithLineBreaks(p)}</p>`)
+      .map((p, idx) => {
+        const cleanP = escapeHtmlWithLineBreaks(p);
+        if (idx === 0) {
+          return `<p class="letter-para-lead">${cleanP}</p>`;
+        }
+        return `<p>${cleanP}</p>`;
+      })
       .join('');
 
     chapterPageRight.innerHTML = `
-      <div class="letter-header">
-        <div class="letter-title-group">
-          <span class="letter-number">LETTER ${ch.number} / ${chapters.length}</span>
-          <h2 class="letter-author">${escapeHtml(ch.displayName || ch.name)}</h2>
-          <div class="letter-subtitle">${escapeHtml(ch.subtitle)}</div>
+      <div class="letter-stationery">
+        <!-- Vintage Postal Stamp & Cancellation Waves -->
+        <div class="vintage-postal-mark" title="Special Air Mail · Dehradun 2026">
+          <div class="postal-stamp">
+            <div class="stamp-scallops"></div>
+            <div class="stamp-content">
+              <span class="stamp-number">18<small>th</small></span>
+              <span class="stamp-airmail">AIR MAIL</span>
+              <span class="stamp-heart">♡</span>
+            </div>
+          </div>
+          <div class="postmark-circle">
+            <span class="postmark-city">DEHRADUN</span>
+            <span class="postmark-date">26.09.26</span>
+            <div class="postmark-waves">
+              <span></span><span></span><span></span>
+            </div>
+          </div>
         </div>
-        <div class="letter-stamp-icon" title="Keepsake Letter">💌</div>
-      </div>
 
-      <div class="letter-body">
-        ${formattedParagraphs}
-      </div>
+        <!-- Corner Paperclip Accent -->
+        <div class="stationery-paperclip" aria-hidden="true" title="Keepsake clip">📎</div>
 
-      <div class="letter-footer-meta">
-        <span>11 VERSIONS OF SHIVA</span>
-        <button class="letter-copy-btn" id="copyLetterBtn" title="Copy verbatim letter text to clipboard">
-          📋 Copy Letter
-        </button>
-        <span>${ch.number} OF ${chapters.length}</span>
+        <div class="letter-header">
+          <div class="letter-title-group">
+            <span class="letter-lead-label">A LIVE LETTER FROM</span>
+            <h2 class="letter-author">${escapeHtml(ch.displayName || ch.name)}</h2>
+            <div class="letter-subtitle">“${escapeHtml(ch.subtitle)}”</div>
+          </div>
+        </div>
+
+        <div class="letter-paper-content">
+          <div class="letter-body">
+            ${formattedParagraphs}
+          </div>
+
+          <!-- Handwritten Closing & Wax Seal -->
+          <div class="letter-seal-footer">
+            <div class="wax-seal" title="Sealed with love">
+              <div class="wax-seal-inner">
+                <span class="wax-heart">❤</span>
+              </div>
+            </div>
+            <div class="letter-stationery-signoff">
+              <span class="signoff-note">Written with all the love in the world ♡</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="letter-footer-meta">
+          <span>CHAPTER ${ch.number} OF ${chapters.length}</span>
+          <button class="letter-copy-btn" id="copyLetterBtn" title="Copy verbatim letter text to clipboard">
+            📋 Copy Letter
+          </button>
+          <span>11 VERSIONS OF SHIVA</span>
+        </div>
       </div>
     `;
 
@@ -828,134 +757,36 @@
       });
     }
 
-    // Attach click and drag-drop listeners to polaroids
+    // Attach click listeners to polaroids for full view in lightbox
     chapterPageLeft.querySelectorAll('.polaroid-card').forEach(card => {
       const photoId = card.getAttribute('data-photo-id');
-      const hasImg = card.getAttribute('data-has-img') === 'true';
       const label = card.getAttribute('data-photo-label');
       const caption = card.getAttribute('data-photo-caption');
+      const src = card.getAttribute('data-photo-src');
 
       card.addEventListener('click', () => {
-        if (hasImg) {
-          openLightbox(photoId, label, caption, savedPhotos[photoId]);
-        } else {
-          triggerDirectUpload(photoId);
-        }
-      });
-
-      // Drag and Drop functionality
-      card.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        card.classList.add('drag-over');
-      });
-
-      card.addEventListener('dragleave', () => {
-        card.classList.remove('drag-over');
-      });
-
-      card.addEventListener('drop', (e) => {
-        e.preventDefault();
-        card.classList.remove('drag-over');
-        if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) {
-          const file = e.dataTransfer.files[0];
-          if (file.type.startsWith('image/')) {
-            const reader = new FileReader();
-            reader.onload = (evt) => {
-              savePhoto(photoId, evt.target.result);
-              renderChapterSpread(chapterIndex);
-              populatePhotoManagerGrid();
-            };
-            reader.readAsDataURL(file);
-          }
-        }
+        openLightbox(photoId, label, caption, src);
       });
     });
   }
 
   // --- Render Final Epilogue Page ---
   function renderFinalPage() {
-    const savedPhotos = getSavedPhotos();
     const finalPhoto = window.BOOK_DATA.finalPage.photo;
-    const uploadedImg = savedPhotos[finalPhoto.id] || finalPhoto.src;
+    const uploadedImg = finalPhoto.src;
 
-    if (uploadedImg) {
-      finalPhotoFrame.innerHTML = `<img src="${uploadedImg}" alt="Final Keepsake Photo" class="polaroid-img">`;
-      finalPhotoCard.title = "Click to enlarge keepsake photo";
-    } else {
-      finalPhotoFrame.innerHTML = `
-        <div class="polaroid-placeholder-inner">
-          <span class="placeholder-icon">📸</span>
-          <span class="placeholder-label">${escapeHtml(finalPhoto.label)}</span>
-          <span class="placeholder-action">+ Add Keepsake Photo</span>
-        </div>
-      `;
-      finalPhotoCard.title = "Click or drag photo here to add";
-    }
+    finalPhotoFrame.innerHTML = `<img src="${uploadedImg}" alt="Final Keepsake Photo" class="polaroid-img">`;
+    finalPhotoCard.title = "Click to view full keepsake photo ♡";
 
     finalPhotoCard.onclick = () => {
-      if (uploadedImg) {
-        openLightbox(finalPhoto.id, finalPhoto.label, finalPhoto.caption, uploadedImg);
-      } else {
-        triggerDirectUpload(finalPhoto.id);
-      }
-    };
-
-    finalPhotoCard.ondragover = (e) => {
-      e.preventDefault();
-      finalPhotoCard.classList.add('drag-over');
-    };
-    finalPhotoCard.ondragleave = () => {
-      finalPhotoCard.classList.remove('drag-over');
-    };
-    finalPhotoCard.ondrop = (e) => {
-      e.preventDefault();
-      finalPhotoCard.classList.remove('drag-over');
-      if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) {
-        const file = e.dataTransfer.files[0];
-        if (file.type.startsWith('image/')) {
-          const reader = new FileReader();
-          reader.onload = (evt) => {
-            savePhoto(finalPhoto.id, evt.target.result);
-            renderFinalPage();
-            populatePhotoManagerGrid();
-          };
-          reader.readAsDataURL(file);
-        }
-      }
+      openLightbox(finalPhoto.id, finalPhoto.label, finalPhoto.caption, uploadedImg);
     };
   }
 
-  // --- Direct File Upload Engine ---
-  function triggerDirectUpload(photoId) {
-    activeUploadTargetId = photoId;
-    directPhotoInput.value = '';
-    directPhotoInput.click();
-  }
-
-  directPhotoInput.addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    if (!file || !activeUploadTargetId) return;
-
-    const reader = new FileReader();
-    reader.onload = function (event) {
-      const dataUrl = event.target.result;
-      savePhoto(activeUploadTargetId, dataUrl);
-
-      const epilogueIndex = getTotalPages() - 1;
-      if (currentPage >= 2 && currentPage < epilogueIndex) {
-        renderChapterSpread(currentPage - 2);
-      } else if (currentPage === epilogueIndex) {
-        renderFinalPage();
-      }
-      populatePhotoManagerGrid();
-    };
-    reader.readAsDataURL(file);
-  });
-
-  // --- Lightbox Modal Engine ---
+  // --- Lightbox Modal Engine (Pure View Mode) ---
   function openLightbox(photoId, personLabel, caption, imgSrc) {
     currentLightboxPhoto = { photoId, personLabel, caption, imgSrc };
-    lightboxImgWrapper.innerHTML = `<img src="${imgSrc}" alt="${personLabel}">`;
+    lightboxImgWrapper.innerHTML = `<img src="${imgSrc}" alt="${personLabel}" class="lightbox-photo-full">`;
     lightboxPerson.textContent = personLabel;
     lightboxCaption.textContent = caption;
     lightboxModal.classList.add('active');
@@ -966,341 +797,26 @@
     currentLightboxPhoto = null;
   }
 
-  closeLightboxBtn.addEventListener('click', closeLightbox);
-  lightboxModal.addEventListener('click', (e) => {
-    if (e.target === lightboxModal) closeLightbox();
-  });
-
-  lightboxReplaceBtn.addEventListener('click', () => {
-    if (currentLightboxPhoto) {
-      const pId = currentLightboxPhoto.photoId;
-      closeLightbox();
-      triggerDirectUpload(pId);
-    }
-  });
-
-  lightboxDownloadBtn.addEventListener('click', () => {
-    if (currentLightboxPhoto && currentLightboxPhoto.imgSrc) {
-      const a = document.createElement('a');
-      a.href = currentLightboxPhoto.imgSrc;
-      a.download = `${currentLightboxPhoto.photoId}.png`;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-    }
-  });
-
-  lightboxRemoveBtn.addEventListener('click', () => {
-    if (currentLightboxPhoto) {
-      removePhoto(currentLightboxPhoto.photoId);
-      closeLightbox();
-      const epilogueIndex = getTotalPages() - 1;
-      if (currentPage >= 2 && currentPage < epilogueIndex) {
-        renderChapterSpread(currentPage - 2);
-      } else if (currentPage === epilogueIndex) {
-        renderFinalPage();
-      }
-      populatePhotoManagerGrid();
-    }
-  });
-
-  // --- Photo Manager Modal & Backups ---
-  function populatePhotoManagerGrid() {
-    photoSlotGrid.innerHTML = '';
-    const savedPhotos = getSavedPhotos();
-    const chapters = getActiveChapters();
-
-    const allSlots = [];
-    chapters.forEach(ch => {
-      (ch.photos || []).forEach(p => {
-        allSlots.push({ ...p, person: ch.name });
-      });
-    });
-    allSlots.push({
-      ...window.BOOK_DATA.finalPage.photo,
-      person: 'Epilogue'
-    });
-
-    allSlots.forEach(slot => {
-      const currentImg = savedPhotos[slot.id] || slot.src;
-      const card = document.createElement('div');
-      card.className = 'photo-slot-card';
-
-      const thumbHtml = currentImg 
-        ? `<img src="${currentImg}" alt="${slot.label}">` 
-        : `<span>📷</span>`;
-
-      card.innerHTML = `
-        <div class="photo-slot-thumb">
-          ${thumbHtml}
-        </div>
-        <div class="photo-slot-info">
-          <div class="photo-slot-label">${escapeHtml(slot.person)} · ${escapeHtml(slot.label)}</div>
-          <div class="photo-slot-caption">${escapeHtml(slot.caption)}</div>
-          <button class="photo-upload-btn" data-slot-id="${slot.id}">
-            ${currentImg ? 'Replace Photo' : 'Choose Photo'}
-          </button>
-          ${currentImg ? `<button class="photo-clear-btn" data-clear-id="${slot.id}">Remove</button>` : ''}
-        </div>
-      `;
-
-      card.querySelector('.photo-upload-btn').addEventListener('click', () => {
-        triggerDirectUpload(slot.id);
-      });
-
-      const clearBtn = card.querySelector('.photo-clear-btn');
-      if (clearBtn) {
-        clearBtn.addEventListener('click', () => {
-          removePhoto(slot.id);
-          const epilogueIndex = getTotalPages() - 1;
-          if (currentPage >= 2 && currentPage < epilogueIndex) {
-            renderChapterSpread(currentPage - 2);
-          } else if (currentPage === epilogueIndex) {
-            renderFinalPage();
-          }
-          populatePhotoManagerGrid();
-        });
-      }
-
-      photoSlotGrid.appendChild(card);
+  if (closeLightboxBtn) closeLightboxBtn.addEventListener('click', closeLightbox);
+  if (lightboxCloseActionBtn) lightboxCloseActionBtn.addEventListener('click', closeLightbox);
+  if (lightboxModal) {
+    lightboxModal.addEventListener('click', (e) => {
+      if (e.target === lightboxModal) closeLightbox();
     });
   }
 
-  // Backup & Restore Photos
-  exportPhotosBtn.addEventListener('click', () => {
-    const photos = getSavedPhotos();
-    const blob = new Blob([JSON.stringify(photos, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'shiva-keepsake-photos-backup.json';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  });
-
-  importPhotosBtn.addEventListener('click', () => {
-    importPhotosInput.value = '';
-    importPhotosInput.click();
-  });
-
-  importPhotosInput.addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (evt) => {
-      try {
-        const imported = JSON.parse(evt.target.result);
-        if (typeof imported === 'object' && imported !== null) {
-          const current = getSavedPhotos();
-          Object.assign(current, imported);
-          localStorage.setItem(STORAGE_PHOTOS_KEY, JSON.stringify(current));
-          alert('Photos restored successfully!');
-          updateView('none');
-          populatePhotoManagerGrid();
-        } else {
-          alert('Invalid backup file format.');
-        }
-      } catch (err) {
-        alert('Could not parse backup file.');
+  if (lightboxDownloadBtn) {
+    lightboxDownloadBtn.addEventListener('click', () => {
+      if (currentLightboxPhoto && currentLightboxPhoto.imgSrc) {
+        const a = document.createElement('a');
+        a.href = currentLightboxPhoto.imgSrc;
+        a.download = `${currentLightboxPhoto.personLabel || 'shiva-keepsake'}.jpg`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
       }
-    };
-    reader.readAsText(file);
-  });
-
-  resetAllPhotosBtn.addEventListener('click', () => {
-    if (confirm('Are you sure you want to reset all uploaded photos back to placeholder frames?')) {
-      clearAllPhotos();
-      updateView('none');
-      populatePhotoManagerGrid();
-    }
-  });
-
-  // --- Letters & Memories Editor Modal ---
-  function populateLettersEditor() {
-    const chapters = getActiveChapters();
-    lettersChapterSelect.innerHTML = '';
-
-    chapters.forEach((ch, idx) => {
-      const opt = document.createElement('option');
-      opt.value = idx;
-      opt.textContent = `${ch.number} · ${ch.name} (${ch.subtitle})`;
-      lettersChapterSelect.appendChild(opt);
     });
-
-    const addOpt = document.createElement('option');
-    addOpt.value = 'new';
-    addOpt.textContent = '➕ [Add New Keepsake Chapter / Memory]';
-    lettersChapterSelect.appendChild(addOpt);
-
-    // Default select current chapter if viewing one
-    if (currentPage >= 2 && currentPage < getTotalPages() - 1) {
-      lettersChapterSelect.value = (currentPage - 2);
-    } else {
-      lettersChapterSelect.value = 0;
-    }
-
-    loadSelectedChapterToEditor();
   }
-
-  function loadSelectedChapterToEditor() {
-    const val = lettersChapterSelect.value;
-    const chapters = getActiveChapters();
-
-    if (val === 'new') {
-      const nextNum = (chapters.length + 1).toString().padStart(2, '0');
-      editAuthorName.value = '';
-      editSubtitle.value = '';
-      editHighlight.value = '';
-      editAnnotations.value = '';
-      editLetterText.value = '';
-      revertLetterBtn.style.display = 'none';
-    } else {
-      const ch = chapters[parseInt(val, 10)];
-      if (ch) {
-        editAuthorName.value = ch.name || '';
-        editSubtitle.value = ch.subtitle || '';
-        editHighlight.value = (ch.highlights && ch.highlights[0]) || '';
-        editAnnotations.value = (ch.annotations || []).join(', ');
-        editLetterText.value = ch.letterText || '';
-        revertLetterBtn.style.display = 'inline-block';
-      }
-    }
-  }
-
-  lettersChapterSelect.addEventListener('change', loadSelectedChapterToEditor);
-
-  addNewChapterBtn.addEventListener('click', () => {
-    lettersChapterSelect.value = 'new';
-    loadSelectedChapterToEditor();
-    editAuthorName.focus();
-  });
-
-  saveLetterBtn.addEventListener('click', () => {
-    const val = lettersChapterSelect.value;
-    const chapters = [...getActiveChapters()];
-
-    const author = editAuthorName.value.trim();
-    const subtitle = editSubtitle.value.trim() || 'A sweet memory';
-    const highlight = editHighlight.value.trim();
-    const annotations = editAnnotations.value.split(',').map(s => s.trim()).filter(Boolean);
-    const letter = editLetterText.value;
-
-    if (!author) {
-      alert('Please enter an Author or Person name!');
-      editAuthorName.focus();
-      return;
-    }
-
-    if (val === 'new') {
-      const newNum = (chapters.length + 1).toString().padStart(2, '0');
-      const newId = author.toLowerCase().replace(/[^a-z0-9]/g, '-') || `ch-${newNum}`;
-      const newChapter = {
-        id: newId,
-        number: newNum,
-        name: author.toUpperCase(),
-        displayName: author,
-        subtitle: subtitle,
-        motifs: ['memory', 'love'],
-        annotations: annotations.length > 0 ? annotations : ['cherished memory', 'forever friend'],
-        highlights: highlight ? [highlight] : [],
-        photos: [
-          {
-            id: `${newId}-photo-1`,
-            label: `${author.toUpperCase()} PHOTO 1`,
-            caption: subtitle,
-            src: ''
-          }
-        ],
-        letterText: letter
-      };
-      chapters.push(newChapter);
-    } else {
-      const idx = parseInt(val, 10);
-      const existing = chapters[idx];
-      existing.name = author.toUpperCase();
-      existing.displayName = author;
-      existing.subtitle = subtitle;
-      if (highlight) existing.highlights = [highlight];
-      existing.annotations = annotations;
-      existing.letterText = letter;
-    }
-
-    saveCustomLetters(chapters);
-    setupTableOfContents();
-    setupChapterDots();
-    populateLettersEditor();
-    populatePhotoManagerGrid();
-    updateView('none');
-
-    triggerConfetti();
-    alert('Letter saved successfully!');
-  });
-
-  revertLetterBtn.addEventListener('click', () => {
-    if (confirm('Revert all letters back to the original manuscript?')) {
-      revertCustomLetters();
-      setupTableOfContents();
-      setupChapterDots();
-      populateLettersEditor();
-      populatePhotoManagerGrid();
-      updateView('none');
-      alert('Reverted to original letters!');
-    }
-  });
-
-  exportLettersJsonBtn.addEventListener('click', () => {
-    const chapters = getActiveChapters();
-    const blob = new Blob([JSON.stringify(chapters, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'shiva-book-data-backup.json';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  });
-
-  importLettersJsonBtn.addEventListener('click', () => {
-    importLettersInput.value = '';
-    importLettersInput.click();
-  });
-
-  importLettersInput.addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (evt) => {
-      try {
-        const imported = JSON.parse(evt.target.result);
-        if (Array.isArray(imported)) {
-          saveCustomLetters(imported);
-          setupTableOfContents();
-          setupChapterDots();
-          populateLettersEditor();
-          updateView('none');
-          alert('Letters imported successfully!');
-        } else {
-          alert('Invalid JSON structure for chapters.');
-        }
-      } catch (err) {
-        alert('Could not parse JSON file.');
-      }
-    };
-    reader.readAsText(file);
-  });
-
-  copyLettersCodeBtn.addEventListener('click', () => {
-    const chapters = getActiveChapters();
-    const code = `window.BOOK_DATA.chapters = ${JSON.stringify(chapters, null, 2)};`;
-    navigator.clipboard.writeText(code).then(() => {
-      alert('Code copied! You can now paste this directly into letters-data.js.');
-    }).catch(() => {
-      alert('Could not copy code automatically.');
-    });
-  });
 
   // --- Mobile Tab Switching ---
   function setMobileActiveTab(target) {
@@ -1321,40 +837,28 @@
   if (tabScrapbookBtn) tabScrapbookBtn.addEventListener('click', () => setMobileActiveTab('left'));
   if (tabLetterBtn) tabLetterBtn.addEventListener('click', () => setMobileActiveTab('right'));
 
-  // --- Modals Management ---
+  // --- Modals Management (TOC & Shortcuts) ---
   function openTocModal() { tocModal.classList.add('active'); }
   function closeTocModal() { tocModal.classList.remove('active'); }
-
-  function openPhotosModal() {
-    populatePhotoManagerGrid();
-    photosModal.classList.add('active');
-  }
-  function closePhotosModal() { photosModal.classList.remove('active'); }
-
-  function openLettersModal() {
-    populateLettersEditor();
-    lettersModal.classList.add('active');
-  }
-  function closeLettersModal() { lettersModal.classList.remove('active'); }
 
   function openShortcutsModal() { shortcutsModal.classList.add('active'); }
   function closeShortcutsModal() { shortcutsModal.classList.remove('active'); }
 
-  openTocBtn.addEventListener('click', openTocModal);
-  closeTocModalBtn.addEventListener('click', closeTocModal);
-  tocModal.addEventListener('click', (e) => { if (e.target === tocModal) closeTocModal(); });
+  if (openTocBtn) openTocBtn.addEventListener('click', openTocModal);
+  if (closeTocModalBtn) closeTocModalBtn.addEventListener('click', closeTocModal);
+  if (tocModal) {
+    tocModal.addEventListener('click', (e) => {
+      if (e.target === tocModal) closeTocModal();
+    });
+  }
 
-  openPhotosBtn.addEventListener('click', openPhotosModal);
-  closePhotosModalBtn.addEventListener('click', closePhotosModal);
-  photosModal.addEventListener('click', (e) => { if (e.target === photosModal) closePhotosModal(); });
-
-  openLettersBtn.addEventListener('click', openLettersModal);
-  closeLettersModalBtn.addEventListener('click', closeLettersModal);
-  lettersModal.addEventListener('click', (e) => { if (e.target === lettersModal) closeLettersModal(); });
-
-  openShortcutsBtn.addEventListener('click', openShortcutsModal);
-  closeShortcutsModalBtn.addEventListener('click', closeShortcutsModal);
-  shortcutsModal.addEventListener('click', (e) => { if (e.target === shortcutsModal) closeShortcutsModal(); });
+  if (openShortcutsBtn) openShortcutsBtn.addEventListener('click', openShortcutsModal);
+  if (closeShortcutsModalBtn) closeShortcutsModalBtn.addEventListener('click', closeShortcutsModal);
+  if (shortcutsModal) {
+    shortcutsModal.addEventListener('click', (e) => {
+      if (e.target === shortcutsModal) closeShortcutsModal();
+    });
+  }
 
   // --- Atmosphere & Audio Toggles ---
   atmosphereToggleBtn.addEventListener('click', cycleAtmosphere);
@@ -1419,8 +923,6 @@
     // If a modal is open, let Escape close it
     if (e.key === 'Escape') {
       closeTocModal();
-      closePhotosModal();
-      closeLettersModal();
       closeShortcutsModal();
       closeLightbox();
       return;
@@ -1448,12 +950,6 @@
     } else if (key === 't') {
       e.preventDefault();
       openTocModal();
-    } else if (key === 'p') {
-      e.preventDefault();
-      openPhotosModal();
-    } else if (key === 'l') {
-      e.preventDefault();
-      openLettersModal();
     } else if (key === 'm') {
       e.preventDefault();
       musicToggleBtn.click();
@@ -1520,11 +1016,18 @@
 
   // --- Initialize App ---
   function init() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const pageParam = urlParams.get('page');
+    if (pageParam !== null) {
+      const p = parseInt(pageParam, 10);
+      if (!isNaN(p) && p >= 0) {
+        currentPage = Math.min(p, getTotalPages() - 1);
+      }
+    }
     applyAtmosphere(currentAtmosphere);
     setupTableOfContents();
     setupChapterDots();
     updateView('none');
-    populatePhotoManagerGrid();
     initConfettiCanvas();
   }
 

@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Patrick+Hand&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=20260926_18">
+  <link rel="stylesheet" href="style.css?v=20260926_22">
   <style>
     /* Critical Book Layout Enforcement - Guaranteed Override of any Cached CSS */
     .book-container {
@@ -62,28 +62,18 @@
 
     <div class="header-actions">
       <!-- Reading Atmosphere Toggle -->
-      <button class="header-btn" id="atmosphereToggleBtn" title="Switch reading atmosphere (Desk / Candlelight / Midnight)" aria-label="Toggle atmosphere">
+      <button class="header-btn" id="atmosphereToggleBtn" title="Switch reading atmosphere (Candlelight / Warm Desk / Midnight)" aria-label="Toggle atmosphere">
         <span id="atmosphereIcon">🕯️</span> <span id="atmosphereLabel">Candlelight</span>
       </button>
 
       <!-- Ambient Lo-Fi Music Box Toggle -->
       <button class="header-btn" id="musicToggleBtn" title="Play gentle lo-fi music box ambient chime" aria-label="Toggle music box">
-        <span id="musicIcon">🎵</span> <span id="musicLabel">Music</span>
+        <span id="musicIcon">🎵</span> <span id="musicLabel">Music Box</span>
       </button>
 
       <!-- Audio Toggle Button (Paper rustle) -->
       <button class="header-btn" id="soundToggleBtn" title="Toggle gentle page turn rustle sound" aria-label="Toggle page turn sound">
         <span id="soundIcon">🔇</span> <span id="soundLabel">Rustle Off</span>
-      </button>
-
-      <!-- Letters / Memories Manager -->
-      <button class="header-btn" id="openLettersBtn" title="Edit letters, add personal memories, or export" aria-label="Manage letters">
-        <span>✍️</span> <span>Letters</span>
-      </button>
-
-      <!-- Photo Manager Button -->
-      <button class="header-btn" id="openPhotosBtn" title="Add or replace photos in placeholders" aria-label="Manage photos">
-        <span>📷</span> <span>Photos</span>
       </button>
 
       <!-- Persistent Table of Contents Button -->
@@ -106,6 +96,8 @@
   <!-- Main Stage / Digital Book -->
   <main class="book-stage" role="main">
     <div class="book-container" id="bookContainer">
+      <!-- Satin Silk Ribbon Bookmark -->
+      <div class="book-ribbon-bookmark" aria-hidden="true" title="Keepsake Silk Ribbon"></div>
 
       <!-- ================= PAGE 0: COVER / LANDING ================= -->
       <section class="book-view view-cover active" id="viewCover" style="display: flex !important;" aria-label="Book Cover">
@@ -163,10 +155,7 @@
 
           <!-- TOC Right Page (Chapters 07 to 11 + Epilogue) -->
           <div class="page-right toc-right-page">
-            <div class="toc-header">
-              <h2>& MORE</h2>
-              <p>Growing up & staying you.</p>
-            </div>
+            <div class="toc-header-spacer" aria-hidden="true"></div>
             <nav class="toc-list" id="tocListRight" aria-label="Chapters 7 to 11"></nav>
 
             <div class="toc-illustration-box">
@@ -267,105 +256,6 @@
     </div>
   </div>
 
-  <!-- ================= PHOTO MANAGEMENT / UPLOADER MODAL ================= -->
-  <div class="modal-overlay" id="photosModal" role="dialog" aria-modal="true" aria-labelledby="photosModalTitle">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 id="photosModalTitle">📷 Scrapbook Photos</h3>
-        <button class="modal-close-btn" id="closePhotosModalBtn" aria-label="Close photos dialog">✕</button>
-      </div>
-      <div class="modal-body">
-        <div class="instructions-callout">
-          <strong>How to add real photos:</strong><br>
-          • <strong>Quick Upload (Right now in browser):</strong> Click “Choose Photo” on any slot below to select an image from your computer. It will immediately show up in the scrapbook polaroid frame!<br>
-          • <strong>Permanent Files:</strong> You can also copy your pictures into the <code>assets/images/</code> folder and update filenames in <code>letters-data.js</code>.<br>
-          • Even without photos, elegant placeholder sketches will display automatically.
-        </div>
-
-        <div class="photo-modal-actions">
-          <div class="photo-backup-group">
-            <button class="photo-action-btn" id="exportPhotosBtn" title="Export all photos to a backup file">
-              💾 Backup Photos (JSON)
-            </button>
-            <button class="photo-action-btn" id="importPhotosBtn" title="Restore photos from a backup file">
-              📂 Restore Backup
-            </button>
-          </div>
-          <button class="photo-clear-btn" id="resetAllPhotosBtn" style="font-weight: 600;">
-            ↺ Reset All to Default Placeholders
-          </button>
-        </div>
-
-        <div class="photo-slot-grid" id="photoSlotGrid"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ================= LETTERS / MEMORIES EDITOR MODAL ================= -->
-  <div class="modal-overlay" id="lettersModal" role="dialog" aria-modal="true" aria-labelledby="lettersModalTitle">
-    <div class="modal-content modal-content-wide">
-      <div class="modal-header">
-        <h3 id="lettersModalTitle">✍️ Edit Letters & Memories</h3>
-        <button class="modal-close-btn" id="closeLettersModalBtn" aria-label="Close letters editor">✕</button>
-      </div>
-      <div class="modal-body">
-        <div class="instructions-callout">
-          <strong>Customize or Add Memories:</strong><br>
-          Select any chapter to modify the author, memory theme, handwritten notes, or letter text. All changes are saved automatically in your browser so you can preview them immediately!
-        </div>
-
-        <div class="editor-chapter-bar">
-          <label for="lettersChapterSelect"><strong>Select Chapter / Memory:</strong></label>
-          <div class="editor-select-row">
-            <select id="lettersChapterSelect" class="editor-select"></select>
-            <button class="photo-action-btn" id="addNewChapterBtn" title="Add an extra keepsake chapter">
-              ➕ Add New Memory
-            </button>
-          </div>
-        </div>
-
-        <div class="editor-form-grid">
-          <div class="editor-field">
-            <label for="editAuthorName"><strong>Author / Person Name:</strong></label>
-            <input type="text" id="editAuthorName" class="editor-input" placeholder="e.g. SIDDHI">
-          </div>
-
-          <div class="editor-field">
-            <label for="editSubtitle"><strong>Subtitle / Memory Theme:</strong></label>
-            <input type="text" id="editSubtitle" class="editor-input" placeholder="e.g. Momos in the rain">
-          </div>
-
-          <div class="editor-field full-width">
-            <label for="editHighlight"><strong>Highlighted Scrapbook Quote:</strong></label>
-            <input type="text" id="editHighlight" class="editor-input" placeholder="e.g. voh baarish waala din...">
-          </div>
-
-          <div class="editor-field full-width">
-            <label for="editAnnotations"><strong>Scrapbook Sticky Notes (comma-separated):</strong></label>
-            <input type="text" id="editAnnotations" class="editor-input" placeholder="e.g. momo dedication, 6 ice creams, bestie vibe">
-          </div>
-
-          <div class="editor-field full-width">
-            <label for="editLetterText"><strong>Letter Text (Preserves every word, emoji, & line break):</strong></label>
-            <textarea id="editLetterText" class="editor-textarea" rows="9" placeholder="Write or paste letter content here..."></textarea>
-          </div>
-        </div>
-
-        <div class="editor-footer-actions">
-          <div class="editor-main-btns">
-            <button class="btn-primary" id="saveLetterBtn">💾 Save Letter Changes</button>
-            <button class="btn-secondary" id="revertLetterBtn">↺ Revert Current to Default</button>
-          </div>
-          <div class="editor-backup-btns">
-            <button class="btn-secondary" id="exportLettersJsonBtn" title="Download updated book data as JSON">📥 Export Book (JSON)</button>
-            <button class="btn-secondary" id="importLettersJsonBtn" title="Upload a JSON file of letters">📤 Import Book (JSON)</button>
-            <button class="btn-secondary" id="copyLettersCodeBtn" title="Copy code formatted for letters-data.js">📋 Copy Code</button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <!-- ================= HIGH-RES POLAROID LIGHTBOX MODAL ================= -->
   <div class="modal-overlay modal-lightbox" id="lightboxModal" role="dialog" aria-modal="true" aria-label="Photo Lightbox">
     <div class="lightbox-container">
@@ -381,9 +271,8 @@
         </div>
       </div>
       <div class="lightbox-actions">
-        <button class="lightbox-action-btn" id="lightboxReplaceBtn">📷 Replace Photo</button>
-        <button class="lightbox-action-btn" id="lightboxDownloadBtn">⬇️ Download Photo</button>
-        <button class="lightbox-action-btn btn-danger" id="lightboxRemoveBtn">🗑️ Remove Photo</button>
+        <button class="lightbox-action-btn" id="lightboxDownloadBtn" title="Save this keepsake photo">⬇️ Save Photo</button>
+        <button class="lightbox-action-btn" id="lightboxCloseActionBtn" title="Close photo view">✕ Close</button>
       </div>
     </div>
   </div>
@@ -401,8 +290,6 @@
           <div class="shortcut-row"><kbd>←</kbd> <span>Previous Page</span></div>
           <div class="shortcut-row"><kbd>Home</kbd> / <kbd>End</kbd> <span>Cover / Epilogue</span></div>
           <div class="shortcut-row"><kbd>T</kbd> <span>Table of Contents</span></div>
-          <div class="shortcut-row"><kbd>P</kbd> <span>Scrapbook Photos</span></div>
-          <div class="shortcut-row"><kbd>L</kbd> <span>Letters & Memories Editor</span></div>
           <div class="shortcut-row"><kbd>M</kbd> <span>Toggle Ambient Music Box</span></div>
           <div class="shortcut-row"><kbd>A</kbd> <span>Switch Atmosphere (Candlelight / Desk)</span></div>
           <div class="shortcut-row"><kbd>F</kbd> <span>Toggle Fullscreen</span></div>
@@ -413,13 +300,8 @@
     </div>
   </div>
 
-  <!-- Hidden File Inputs -->
-  <input type="file" id="directPhotoInput" accept="image/*" class="photo-upload-input" aria-hidden="true">
-  <input type="file" id="importPhotosInput" accept=".json,application/json" style="display:none;" aria-hidden="true">
-  <input type="file" id="importLettersInput" accept=".json,application/json" style="display:none;" aria-hidden="true">
-
   <!-- Core Scripts with Cache-Busting Version -->
-  <script src="letters-data.js?v=20260926_18"></script>
-  <script src="book.js?v=20260926_18"></script>
+  <script src="letters-data.js?v=20260926_22"></script>
+  <script src="book.js?v=20260926_22"></script>
 </body>
 </html>

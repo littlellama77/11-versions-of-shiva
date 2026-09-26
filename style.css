@@ -452,6 +452,10 @@ body {
   padding-bottom: 12px;
 }
 
+.toc-header-spacer {
+  height: 104px;
+}
+
 .toc-header h2 {
   font-family: var(--font-serif);
   font-size: 2.2rem;
@@ -725,7 +729,38 @@ body {
   height: 100%;
   object-fit: cover;
   display: block;
+  border-radius: 2px;
 }
+
+/* ==========================================================================
+   CALIBRATED FACE-CENTERING FOR ALL 25 KEEPSAKE PHOTOS
+   Precisely aligned to subject head and face coordinates to prevent cropping
+   ========================================================================== */
+img[src*="siddhi-1"] { object-position: center 42% !important; }
+img[src*="siddhi-2"] { object-position: center 50% !important; }
+img[src*="parakh-1"] { object-position: center 36% !important; }
+img[src*="parakh-2"] { object-position: center 42% !important; }
+img[src*="amogh-1"] { object-position: center 40% !important; }
+img[src*="amogh-2"] { object-position: 55% 18% !important; }
+img[src*="atulya-1"] { object-position: center 38% !important; }
+img[src*="atulya-2"] { object-position: 68% 68% !important; }
+img[src*="vibu-1"] { object-position: center 22% !important; }
+img[src*="agrima-1"] { object-position: center 44% !important; }
+img[src*="agrima-2"] { object-position: 45% 36% !important; }
+img[src*="chitleen-1"] { object-position: center 44% !important; }
+img[src*="chitleen-2"] { object-position: center 42% !important; }
+img[src*="rishita-1"] { object-position: center 42% !important; }
+img[src*="rishita-2"] { object-position: center 43% !important; }
+img[src*="ridhima-1"] { object-position: center 32% !important; }
+img[src*="ridhima-2"] { object-position: center 30% !important; }
+img[src*="mahima-1"] { object-position: center 46% !important; }
+img[src*="mahima-2"] { object-position: 60% 43% !important; }
+img[src*="mahima-3"] { object-position: center 46% !important; }
+img[src*="mahima-4"] { object-position: center 38% !important; }
+img[src*="gorzumo-1"] { object-position: 45% 50% !important; }
+img[src*="gorzumo-2"] { object-position: center 52% !important; }
+img[src*="gorzumo-3"] { object-position: center 44% !important; }
+img[src*="keepsake-final"] { object-position: center 48% !important; }
 
 .polaroid-placeholder-inner {
   display: flex;
@@ -955,15 +990,156 @@ body {
 }
 
 /* ==========================================================================
-   RIGHT PAGE: THE LETTER CONTENT
+   RIGHT PAGE: WHOLESOME & COZY LIVE LETTER STATIONERY
    ========================================================================== */
+.letter-stationery {
+  width: 100%;
+  min-height: 100%;
+  background-color: #fdfbf7;
+  /* Very subtle notebook/stationery ruled lines aligned with line-height */
+  background-image: 
+    linear-gradient(to right, rgba(207, 109, 118, 0.14) 1px, transparent 1px),
+    repeating-linear-gradient(to bottom, transparent, transparent 31px, rgba(160, 140, 120, 0.12) 32px);
+  background-size: 100% 100%, 100% 32px;
+  background-position: 48px 0, 0 16px;
+  border-radius: 4px;
+  padding: 28px 32px 24px 58px;
+  position: relative;
+  box-shadow: 
+    0 1px 3px rgba(0, 0, 0, 0.04),
+    0 10px 25px rgba(45, 35, 25, 0.07);
+  border: 1px solid rgba(220, 205, 185, 0.65);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Brass Paperclip on top-left */
+.stationery-paperclip {
+  position: absolute;
+  top: -14px;
+  left: 22px;
+  font-size: 1.85rem;
+  transform: rotate(-12deg);
+  opacity: 0.85;
+  filter: drop-shadow(1px 2px 3px rgba(0, 0, 0, 0.25));
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Vintage Postal Stamp & Cancellation Waves */
+.vintage-postal-mark {
+  position: absolute;
+  top: 18px;
+  right: 22px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.postal-stamp {
+  width: 56px;
+  height: 66px;
+  background: #f7ede8;
+  border: 2px dashed #b8544d;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(2.5deg);
+  padding: 4px;
+  position: relative;
+}
+
+.postal-stamp::after {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  border: 1px solid rgba(184, 84, 77, 0.35);
+  pointer-events: none;
+}
+
+.stamp-number {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #b8544d;
+  line-height: 1;
+}
+
+.stamp-airmail {
+  font-family: var(--font-sans);
+  font-size: 0.5rem;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  color: #746d65;
+  margin-top: 2px;
+}
+
+.stamp-heart {
+  font-size: 0.85rem;
+  color: #cf6d76;
+  margin-top: 2px;
+}
+
+/* Postmark stamp cancellation */
+.postmark-circle {
+  border: 1.5px solid rgba(79, 116, 138, 0.65);
+  border-radius: 50%;
+  width: 52px;
+  height: 52px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #4f748a;
+  transform: rotate(-10deg);
+  position: relative;
+}
+
+.postmark-city {
+  font-family: var(--font-sans);
+  font-size: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.postmark-date {
+  font-family: var(--font-sans);
+  font-size: 0.46rem;
+  letter-spacing: 0.05em;
+  margin-top: 1px;
+}
+
+.postmark-waves {
+  position: absolute;
+  right: -24px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.postmark-waves span {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background: rgba(79, 116, 138, 0.55);
+  border-radius: 1px;
+}
+
+/* Letter header */
 .letter-header {
-  margin-bottom: 22px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.09);
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
   padding-bottom: 14px;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+  padding-right: 110px; /* leaves room for postal stamp */
 }
 
 .letter-title-group {
@@ -971,61 +1147,118 @@ body {
   flex-direction: column;
 }
 
-.letter-number {
+.letter-lead-label {
   font-family: var(--font-sans);
-  font-size: 0.75rem;
+  font-size: 0.68rem;
   font-weight: 700;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--accent-rose);
+  color: var(--accent-terracotta);
   margin-bottom: 2px;
 }
 
 .letter-author {
   font-family: var(--font-serif);
-  font-size: 2rem;
+  font-size: 2.15rem;
   font-weight: 700;
-  color: var(--text-charcoal);
-  letter-spacing: 0.03em;
-  line-height: 1.1;
+  color: #241d18;
+  letter-spacing: 0.02em;
+  line-height: 1.12;
   white-space: pre-line;
 }
 
 .letter-subtitle {
   font-family: var(--font-handwriting);
-  font-size: 1.4rem;
-  color: var(--text-muted);
+  font-size: 1.45rem;
+  color: #63574c;
   margin-top: 2px;
+  font-style: italic;
 }
 
-.letter-stamp-icon {
-  font-size: 1.6rem;
-  color: rgba(207, 109, 118, 0.5);
-  margin-bottom: 4px;
+/* Letter body */
+.letter-paper-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-/* Letter Body Text Styling */
 .letter-body {
   font-family: var(--font-reading);
-  font-size: 1.05rem;
-  line-height: 1.72;
-  color: var(--text-charcoal);
+  font-size: 1.1rem;
+  line-height: 2.0; /* matches 32px notebook line ruling */
+  color: #28211b;
   white-space: pre-line;
   word-wrap: break-word;
   position: relative;
-  flex: 1;
+  text-rendering: optimizeLegibility;
 }
 
-/* Subtle signature style if text has ending signoff */
 .letter-body p {
   margin-bottom: 1.25em;
 }
 
+.letter-para-lead::first-letter {
+  font-family: var(--font-serif);
+  font-size: 2.35rem;
+  float: left;
+  line-height: 0.85;
+  margin-right: 8px;
+  margin-top: 4px;
+  color: var(--accent-terracotta);
+}
+
+/* Wax Seal at the bottom of the letter */
+.letter-seal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px dashed rgba(180, 160, 140, 0.35);
+}
+
+.wax-seal {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #b33945 0%, #87202c 70%, #5e111a 100%);
+  box-shadow: 
+    0 3px 8px rgba(0, 0, 0, 0.35),
+    inset 0 1px 2px rgba(255, 255, 255, 0.4),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.wax-seal-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wax-heart {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.3rem;
+  line-height: 1;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.signoff-note {
+  font-family: var(--font-handwriting);
+  font-size: 1.25rem;
+  color: #726253;
+}
+
 /* Page footer indicator inside letter */
 .letter-footer-meta {
-  margin-top: 28px;
+  margin-top: 22px;
   padding-top: 14px;
-  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1033,6 +1266,21 @@ body {
   font-size: 0.72rem;
   color: var(--text-faint);
   letter-spacing: 0.05em;
+}
+
+/* Silk Ribbon Bookmark on Top of Book */
+.book-ribbon-bookmark {
+  position: absolute;
+  top: -6px;
+  right: 140px;
+  width: 28px;
+  height: 80px;
+  background: linear-gradient(135deg, #a8323e 0%, #82222c 50%, #5c141c 100%);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+  z-index: 50;
+  pointer-events: none;
+  border-radius: 2px 2px 0 0;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 82%, 0 100%);
 }
 
 /* ==========================================================================
@@ -1305,109 +1553,7 @@ body {
   flex: 1;
 }
 
-/* Photo Uploader / Replacement Modal */
-.photo-slot-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 16px;
-  margin-top: 14px;
-}
 
-.photo-slot-card {
-  background: #ffffff;
-  border: 1px solid #ded5c5;
-  border-radius: 8px;
-  padding: 12px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.photo-slot-thumb {
-  width: 60px;
-  height: 60px;
-  border-radius: 4px;
-  background: #f1ebd8;
-  object-fit: cover;
-  border: 1px solid #dcd1be;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.2rem;
-  color: #9c907e;
-  overflow: hidden;
-}
-.photo-slot-thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.photo-slot-info {
-  flex: 1;
-}
-
-.photo-slot-label {
-  font-family: var(--font-sans);
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: var(--text-charcoal);
-}
-
-.photo-slot-caption {
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  line-height: 1.3;
-}
-
-.photo-upload-input {
-  display: none;
-}
-
-.photo-upload-btn {
-  margin-top: 6px;
-  background: var(--paper-warm);
-  border: 1px solid #b8a892;
-  font-family: var(--font-sans);
-  font-size: 0.72rem;
-  font-weight: 600;
-  padding: 4px 10px;
-  border-radius: 4px;
-  cursor: pointer;
-  color: var(--text-charcoal);
-  display: inline-block;
-}
-
-.photo-upload-btn:hover {
-  background: #eae0ce;
-}
-
-.photo-clear-btn {
-  margin-top: 6px;
-  margin-left: 6px;
-  background: none;
-  border: none;
-  font-family: var(--font-sans);
-  font-size: 0.72rem;
-  color: var(--accent-terracotta);
-  cursor: pointer;
-}
-
-.photo-clear-btn:hover {
-  text-decoration: underline;
-}
-
-.instructions-callout {
-  background: #fdf5e7;
-  border-left: 3px solid var(--accent-amber);
-  padding: 12px 16px;
-  border-radius: 0 6px 6px 0;
-  font-family: var(--font-sans);
-  font-size: 0.85rem;
-  color: #4b3d2b;
-  margin-bottom: 16px;
-  line-height: 1.5;
-}
 
 /* ==========================================================================
    MOBILE & RESPONSIVE LAYOUTS (< 900px)
@@ -1645,11 +1791,22 @@ body {
     height: auto;
   }
 
-  .toc-left-page, .toc-right-page {
+  .toc-left-page {
     width: 100%;
-    padding: 20px 14px;
+    padding: 20px 14px 0 14px;
     border-right: none;
     height: auto;
+  }
+
+  .toc-right-page {
+    width: 100%;
+    padding: 0 14px 20px 14px;
+    border-right: none;
+    height: auto;
+  }
+
+  .toc-header-spacer {
+    display: none;
   }
 
   .toc-header h2 {
@@ -1825,17 +1982,36 @@ body {
   }
 
   /* Letter Page Layout on Mobile */
-  .letter-header {
-    margin-bottom: 18px;
+  .letter-stationery {
+    padding: 20px 16px 18px 20px;
+    background-position: 14px 0, 0 14px;
+    background-size: 100% 100%, 100% 28px;
   }
 
-  .letter-number {
-    font-size: 0.72rem;
-    letter-spacing: 0.15em;
+  .stationery-paperclip {
+    top: -10px;
+    left: 12px;
+    font-size: 1.4rem;
+  }
+
+  .vintage-postal-mark {
+    top: 12px;
+    right: 12px;
+    transform: scale(0.82);
+    transform-origin: top right;
+  }
+
+  .letter-header {
+    margin-bottom: 14px;
+    padding-right: 70px;
+  }
+
+  .letter-lead-label {
+    font-size: 0.65rem;
   }
 
   .letter-author {
-    font-size: 1.8rem;
+    font-size: 1.85rem;
     line-height: 1.15;
   }
 
@@ -1845,8 +2021,22 @@ body {
 
   .letter-body {
     font-size: 1.05rem;
-    line-height: 1.74;
+    line-height: 1.85;
     word-break: break-word;
+  }
+
+  .letter-seal-footer {
+    margin-top: 18px;
+    padding-top: 14px;
+  }
+
+  .wax-seal {
+    width: 44px;
+    height: 44px;
+  }
+
+  .signoff-note {
+    font-size: 1.1rem;
   }
 
   .letter-footer-meta {
@@ -1854,7 +2044,7 @@ body {
     gap: 12px;
     align-items: stretch;
     text-align: center;
-    margin-top: 24px;
+    margin-top: 20px;
     padding-top: 14px;
   }
 
@@ -2068,193 +2258,37 @@ body.theme-midnight {
   font-size: 1.05rem;
 }
 
-/* Drag and Drop hover state for polaroids */
-.polaroid-card.drag-over {
-  outline: 3px dashed var(--accent-rose);
-  outline-offset: 4px;
-  transform: scale(1.04) rotate(0deg) !important;
-  box-shadow: 0 14px 30px rgba(207, 109, 118, 0.35);
-  transition: all 0.2s ease;
+/* Header icon-only buttons */
+.btn-icon-only {
+  padding: 8px 10px;
+  font-size: 1.05rem;
 }
 
-/* Photo Modal Actions */
-.photo-modal-actions {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 14px;
+/* Warm Candlelight Atmospheric Ambience */
+body.theme-candlelight {
+  background-image: 
+    radial-gradient(ellipse at 50% 35%, #422a16 0%, #28170b 70%, #140b05 100%),
+    repeating-linear-gradient(45deg, rgba(255,200,100,0.02) 0px, rgba(255,200,100,0.02) 2px, transparent 2px, transparent 4px);
+  --paper-cream: #faf4e6;
+  --paper-warm: #f6ecdb;
 }
 
-.photo-backup-group {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
+body.theme-candlelight::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 38%, rgba(255, 185, 95, 0.13) 0%, rgba(255, 160, 50, 0.05) 55%, transparent 80%);
+  animation: candleFlickerWarm 5s infinite alternate ease-in-out;
+  z-index: 1;
 }
 
-.photo-action-btn {
-  background: var(--paper-warm);
-  border: 1px solid var(--accent-kraft);
-  color: var(--text-charcoal);
-  padding: 6px 12px;
-  border-radius: 6px;
-  font-family: var(--font-sans);
-  font-size: 0.82rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.photo-action-btn:hover {
-  background: #fff;
-  border-color: var(--accent-rose);
-  color: var(--accent-rose);
-}
-
-/* Letters / Memories Editor Modal */
-.modal-content-wide {
-  max-width: 840px;
-  width: 95%;
-}
-
-.editor-chapter-bar {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-bottom: 18px;
-  padding: 12px 16px;
-  background: rgba(0, 0, 0, 0.025);
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  border-radius: 8px;
-}
-
-.editor-select-row {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-}
-
-.editor-select {
-  flex: 1;
-  padding: 9px 14px;
-  border: 1px solid var(--accent-kraft);
-  border-radius: 6px;
-  background: var(--paper-ivory);
-  font-family: var(--font-sans);
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--text-charcoal);
-  cursor: pointer;
-}
-
-.editor-form-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
-  margin-bottom: 20px;
-}
-
-.editor-field {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.editor-field.full-width {
-  grid-column: 1 / -1;
-}
-
-.editor-field label {
-  font-size: 0.86rem;
-  color: var(--text-muted);
-  font-family: var(--font-sans);
-}
-
-.editor-input {
-  width: 100%;
-  padding: 9px 12px;
-  border: 1px solid var(--accent-kraft);
-  border-radius: 6px;
-  background: var(--paper-ivory);
-  font-family: var(--font-sans);
-  font-size: 0.92rem;
-  color: var(--text-charcoal);
-  transition: border-color 0.2s ease;
-}
-
-.editor-input:focus, .editor-textarea:focus {
-  outline: none;
-  border-color: var(--accent-rose);
-  box-shadow: 0 0 0 3px var(--accent-rose-soft);
-}
-
-.editor-textarea {
-  width: 100%;
-  padding: 12px 14px;
-  border: 1px solid var(--accent-kraft);
-  border-radius: 6px;
-  background: var(--paper-ivory);
-  font-family: var(--font-reading);
-  font-size: 0.98rem;
-  line-height: 1.65;
-  color: var(--text-charcoal);
-  resize: vertical;
-  min-height: 180px;
-  transition: border-color 0.2s ease;
-}
-
-.editor-footer-actions {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 12px;
-  padding-top: 14px;
-  border-top: 1px solid rgba(0, 0, 0, 0.08);
-}
-
-.editor-main-btns, .editor-backup-btns {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.btn-primary {
-  background: var(--accent-terracotta);
-  color: #fff;
-  border: none;
-  padding: 10px 18px;
-  border-radius: 6px;
-  font-family: var(--font-sans);
-  font-size: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 6px rgba(184, 84, 77, 0.3);
-}
-
-.btn-primary:hover {
-  background: #a0443d;
-  transform: translateY(-1px);
-}
-
-.btn-secondary {
-  background: var(--paper-warm);
-  color: var(--text-charcoal);
-  border: 1px solid var(--accent-kraft);
-  padding: 9px 14px;
-  border-radius: 6px;
-  font-family: var(--font-sans);
-  font-size: 0.85rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.btn-secondary:hover {
-  background: #fff;
-  border-color: var(--text-muted);
+@keyframes candleFlickerWarm {
+  0% { opacity: 0.85; transform: scale(1); }
+  25% { opacity: 0.98; transform: scale(1.02) translate(1px, -1px); }
+  50% { opacity: 0.78; transform: scale(0.99) translate(-1px, 1px); }
+  75% { opacity: 1; transform: scale(1.03); }
+  100% { opacity: 0.88; transform: scale(1); }
 }
 
 /* Lightbox Modal */
