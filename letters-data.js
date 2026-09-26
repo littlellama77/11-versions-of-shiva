@@ -41,9 +41,9 @@ window.BOOK_DATA = {
     buttonText: "READ AGAIN ↺",
     photo: {
       id: "final-photo",
-      label: "SHIVA & EVERYONE",
+      label: "ALL 11 VERSIONS OF YOU",
       caption: "All 11 versions of you, and everyone who loves you ♡",
-      src: ""
+      src: "assets/images/keepsake-final.jpg"
     }
   },
   chapters: [
