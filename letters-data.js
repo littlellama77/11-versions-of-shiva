@@ -348,21 +348,15 @@ Happy 18th hizru boi😘🫶`
       photos: [
         {
           id: "rishita-photo-1",
-          label: "RISHITA PHOTO 1",
-          caption: "Third Lane & ₹5 Curls + Sting treasure 🥤",
-          src: ""
+          label: "US AGAINST THE WORLD",
+          caption: "sisterhood, mirror selfies & lifelong bond 💙",
+          src: "assets/images/rishita-1.jpg"
         },
         {
           id: "rishita-photo-2",
-          label: "RISHITA PHOTO 2",
-          caption: "scooty roaming & unexpected bed naps 🛏️",
-          src: ""
-        },
-        {
-          id: "rishita-photo-3",
-          label: "RISHITA PHOTO 3",
-          caption: "not just a friend, a sister forever 🫶",
-          src: ""
+          label: "DESI GLAM & GRACE",
+          caption: "ethnic elegance & hair-flip vibes ✨",
+          src: "assets/images/rishita-2.jpg"
         }
       ],
       letterText: `Dear Akku,
