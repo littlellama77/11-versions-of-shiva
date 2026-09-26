@@ -1412,6 +1412,11 @@ body {
 /* ==========================================================================
    MOBILE & RESPONSIVE LAYOUTS (< 900px)
    ========================================================================== */
+/* ==========================================================================
+   MOBILE & RESPONSIVE DESIGN SYSTEM (< 900px)
+   Bespoke tactile mobile scrapbook experience
+   ========================================================================== */
+
 .mobile-view-tabs {
   display: none;
   width: 100%;
@@ -1447,30 +1452,113 @@ body {
     --book-height: auto;
   }
   
+  html, body {
+    overflow-x: hidden;
+    width: 100%;
+  }
+
   body {
     padding: 0;
-    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
     justify-content: flex-start;
   }
 
+  /* Compact Sleek Mobile Header */
   .site-header {
-    padding: 12px 16px;
+    width: 100%;
+    padding: 8px 12px;
+    gap: 8px;
+    position: sticky;
+    top: 0;
+    background: rgba(28, 24, 22, 0.94);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 1000;
+    max-width: 100%;
+  }
+
+  .book-branding {
+    gap: 6px;
+  }
+
+  .brand-icon {
+    font-size: 1rem;
+  }
+
+  .brand-title {
+    font-size: 0.88rem;
+    white-space: nowrap;
+    letter-spacing: 0.02em;
   }
   
   .brand-badge {
     display: none;
   }
 
+  .header-actions {
+    gap: 6px;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+
+  /* Compact button styling on phones */
+  .header-btn {
+    padding: 6px 10px;
+    font-size: 0.78rem;
+    white-space: nowrap;
+    border-radius: 18px;
+    height: 34px;
+  }
+
+  /* Hide non-essential buttons and text labels on mobile */
+  #fullscreenToggleBtn, #openShortcutsBtn, #soundToggleBtn {
+    display: none !important;
+  }
+
+  #atmosphereLabel, #musicLabel {
+    display: none;
+  }
+
+  #atmosphereToggleBtn, #musicToggleBtn {
+    padding: 0;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+  }
+
+  .header-btn.btn-toc {
+    padding: 6px 12px;
+    font-weight: 700;
+  }
+
+  /* Responsive Stage & Container */
   .book-stage {
-    padding: 6px 12px 16px;
+    width: 100%;
+    padding: 6px 8px 84px; /* leaves room for sticky bottom nav */
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    min-height: calc(100dvh - 54px);
     perspective: none;
+    box-sizing: border-box;
   }
 
   .book-container {
+    width: 100%;
+    max-width: 100%;
     height: auto;
-    min-height: 640px;
-    max-height: calc(100vh - 160px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    min-height: calc(100dvh - 145px);
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+    display: block !important;
+    overflow: hidden;
+    position: relative;
   }
 
   /* Remove desktop book spine on mobile */
@@ -1478,68 +1566,405 @@ body {
     display: none;
   }
 
-  /* Show mobile tabs toggle on chapter spreads */
-  .mobile-view-tabs {
-    display: flex;
+  /* Re-position ribbon bookmark to top-right corner on mobile */
+  .ribbon-bookmark {
+    left: auto;
+    right: 18px;
+    transform: none;
+    width: 18px;
+    height: 52px;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%);
   }
 
-  /* Chapter Spread on mobile: stack or switch tab */
-  .view-chapter {
+  .ribbon-bookmark:hover {
+    transform: rotate(2deg);
+    height: 60px;
+  }
+
+  /* Cover View on Mobile */
+  .view-cover {
+    padding: 12px 10px;
+    min-height: calc(100dvh - 145px);
+    display: flex !important;
     flex-direction: column;
-    overflow: hidden;
+    justify-content: center;
   }
 
-  .page-left, .page-right {
+  .cover-frame {
     width: 100%;
-    height: 100%;
-    padding: 24px 20px;
-    border-right: none;
+    height: auto;
+    min-height: calc(100dvh - 170px);
+    padding: 24px 14px;
+    border: 2px solid #3c352f;
+    outline: 1px solid #7c6f62;
+    outline-offset: -5px;
+    gap: 12px;
+    justify-content: space-around;
   }
 
-  .page-left.mobile-hidden,
-  .page-right.mobile-hidden {
-    display: none;
+  .cover-header-meta {
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
   }
 
-  .polaroid-card {
-    width: calc(50% - 8px);
-    min-width: 135px;
-    padding: 8px 8px 14px;
+  .cover-main-title {
+    font-size: clamp(2.1rem, 8vw, 2.7rem);
+    line-height: 1.1;
+    margin: 8px 0;
   }
 
-  .polaroid-caption {
-    font-size: 0.95rem;
+  .cover-main-title .of-word {
+    font-size: 1.25rem;
+    margin: 2px 0;
   }
 
-  .letter-author {
-    font-size: 1.6rem;
+  .cover-subtitle {
+    font-size: clamp(1rem, 3.8vw, 1.2rem);
+    line-height: 1.45;
   }
 
-  .letter-body {
-    font-size: 1.02rem;
-    line-height: 1.68;
+  .cover-divider {
+    margin: 8px 0;
+    width: 50px;
   }
 
-  /* TOC on mobile */
+  .cover-tagline {
+    font-size: clamp(1.15rem, 4.4vw, 1.35rem);
+    line-height: 1.35;
+  }
+
+  .cover-open-btn {
+    width: 100%;
+    max-width: 270px;
+    padding: 13px 20px;
+    font-size: 0.92rem;
+    justify-content: center;
+    margin-top: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  }
+
+  .cover-footer-note {
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+  }
+
+  /* Table of Contents View on Mobile */
+  .view-toc {
+    height: auto;
+    min-height: calc(100dvh - 145px);
+    overflow-y: visible;
+  }
+
   .toc-spread {
     flex-direction: column;
     height: auto;
   }
-  
+
   .toc-left-page, .toc-right-page {
+    width: 100%;
+    padding: 20px 14px;
     border-right: none;
-    padding: 24px 20px;
     height: auto;
   }
 
-  /* Footer controls on mobile */
+  .toc-header h2 {
+    font-size: 1.6rem;
+  }
+
+  .toc-header p {
+    font-size: 1.15rem;
+  }
+
+  .toc-item {
+    padding: 12px 14px;
+    min-height: 52px;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.025);
+    margin-bottom: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+  }
+
+  .toc-item:active {
+    background: rgba(207, 109, 118, 0.12);
+    transform: scale(0.99);
+  }
+
+  .toc-item-num {
+    font-size: 1rem;
+    min-width: 24px;
+  }
+
+  .toc-item-name {
+    font-size: 0.92rem;
+  }
+
+  .toc-item-sub {
+    font-size: 1.05rem;
+  }
+
+  /* Chapter Spread on Mobile with Segmented Tabs */
+  .view-chapter {
+    flex-direction: column;
+    height: auto;
+    min-height: calc(100dvh - 145px);
+  }
+
+  .mobile-view-tabs {
+    display: flex;
+    position: sticky;
+    top: 0;
+    background: rgba(246, 240, 226, 0.98);
+    backdrop-filter: blur(14px);
+    padding: 8px 12px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    z-index: 50;
+    gap: 8px;
+  }
+
+  .mobile-tab-btn {
+    flex: 1;
+    padding: 9px 14px;
+    font-size: 0.86rem;
+    font-weight: 700;
+    border-radius: 22px;
+    background: rgba(0, 0, 0, 0.05);
+    color: var(--text-muted);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+  }
+
+  .mobile-tab-btn.active {
+    background: var(--text-charcoal);
+    color: #ffffff;
+    border-color: var(--text-charcoal);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .page-left, .page-right {
+    width: 100%;
+    height: auto;
+    min-height: 480px;
+    padding: 18px 14px 34px;
+    overflow-y: visible;
+    border-right: none;
+    box-sizing: border-box;
+  }
+
+  .page-left.mobile-hidden,
+  .page-right.mobile-hidden {
+    display: none !important;
+  }
+
+  /* Scrapbook Layout on Mobile */
+  .scrapbook-header {
+    margin-bottom: 14px;
+  }
+
+  .scrapbook-badge {
+    font-size: 0.7rem;
+  }
+
+  .scrapbook-name {
+    font-size: 1.85rem;
+    line-height: 1.15;
+  }
+
+  .scrapbook-subtitle {
+    font-size: 1.25rem;
+  }
+
+  .polaroid-gallery {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+  }
+
+  .polaroid-card {
+    width: 100%;
+    max-width: 280px;
+    margin: 0 auto;
+    padding: 10px 10px 18px;
+    transform: rotate(0deg) !important;
+  }
+
+  .polaroid-card:nth-child(even) {
+    transform: rotate(1deg) !important;
+  }
+
+  .polaroid-card:nth-child(odd) {
+    transform: rotate(-1deg) !important;
+  }
+
+  .polaroid-photo-frame {
+    height: 195px;
+  }
+
+  .polaroid-caption {
+    font-size: 1.15rem;
+    margin-top: 8px;
+  }
+
+  .scrapbook-notes-container {
+    margin-top: 16px;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .scrapbook-note {
+    font-size: 1.15rem;
+    padding: 6px 12px;
+  }
+
+  .scrapbook-quote-card {
+    margin-top: 16px;
+    padding: 14px 16px;
+  }
+
+  .scrapbook-quote-text {
+    font-size: 1.1rem;
+    line-height: 1.45;
+  }
+
+  /* Special Motifs on Mobile */
+  .case-file-card, .invoice-card, .wealth-meter-box {
+    width: 100%;
+    max-width: 320px;
+    margin: 12px auto;
+  }
+
+  /* Letter Page Layout on Mobile */
+  .letter-header {
+    margin-bottom: 18px;
+  }
+
+  .letter-number {
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+  }
+
+  .letter-author {
+    font-size: 1.8rem;
+    line-height: 1.15;
+  }
+
+  .letter-subtitle {
+    font-size: 1.25rem;
+  }
+
+  .letter-body {
+    font-size: 1.05rem;
+    line-height: 1.74;
+    word-break: break-word;
+  }
+
+  .letter-footer-meta {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+    text-align: center;
+    margin-top: 24px;
+    padding-top: 14px;
+  }
+
+  .letter-copy-btn {
+    padding: 10px 16px;
+    font-size: 0.88rem;
+    width: 100%;
+  }
+
+  /* Epilogue / Final View on Mobile */
+  .view-final {
+    padding: 20px 12px;
+    min-height: calc(100dvh - 145px);
+  }
+
+  .final-card {
+    padding: 24px 14px;
+    gap: 14px;
+    width: 100%;
+  }
+
+  .final-title {
+    font-size: 2.2rem;
+  }
+
+  .final-subtitle {
+    font-size: 1.25rem;
+  }
+
+  .final-photo-frame {
+    width: 100%;
+    max-width: 260px;
+  }
+
+  .final-message {
+    font-size: 1.15rem;
+    line-height: 1.5;
+  }
+
+  .final-closing {
+    font-size: 1.55rem;
+  }
+
+  .final-read-btn {
+    width: 100%;
+    max-width: 260px;
+    padding: 12px 20px;
+    font-size: 0.95rem;
+  }
+
+  /* Fixed Bottom Controls on Mobile */
   .site-footer {
-    padding: 10px 16px 16px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    padding: 10px 12px calc(10px + env(safe-area-inset-bottom, 0px));
+    background: rgba(22, 18, 16, 0.96);
+    backdrop-filter: blur(16px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 -4px 18px rgba(0, 0, 0, 0.4);
   }
 
   .nav-btn {
-    padding: 8px 14px;
-    font-size: 0.78rem;
+    padding: 10px 16px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    border-radius: 22px;
+    min-width: 90px;
+    height: 44px;
+    justify-content: center;
+  }
+
+  .nav-center-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+  }
+
+  .nav-page-label {
+    font-size: 0.8rem;
+    color: #e5dac9;
+    font-weight: 600;
+    max-width: 145px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: center;
   }
 
   .nav-keys-hint {
@@ -1549,31 +1974,56 @@ body {
   .chapter-dots {
     display: none;
   }
-}
 
-/* Small phones */
-@media (max-width: 480px) {
-  .cover-frame {
-    padding: 28px 16px;
-    width: calc(100% - 24px);
-    height: calc(100% - 24px);
+  /* Modals on Mobile - Bottom Sheet feel */
+  .modal-overlay {
+    padding: 10px;
+    align-items: flex-end;
   }
 
-  .cover-main-title {
-    font-size: 2.2rem;
-  }
-
-  .cover-subtitle {
-    font-size: 1.15rem;
-  }
-
-  .cover-tagline {
-    font-size: 1.25rem;
-  }
-
-  .polaroid-card {
+  .modal-content, .modal-content-wide, .modal-content-sm {
     width: 100%;
-    max-width: 240px;
+    max-width: 100%;
+    max-height: 88dvh;
+    border-radius: 18px 18px 8px 8px;
+    padding: 20px 14px;
+  }
+
+  .editor-form-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .editor-field.full-width {
+    grid-column: 1;
+  }
+
+  .editor-footer-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .editor-main-btns, .editor-backup-btns {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .editor-main-btns button, .editor-backup-btns button {
+    width: 100%;
+    padding: 12px;
+  }
+
+  .lightbox-container {
+    width: 95%;
+  }
+
+  .lightbox-polaroid {
+    padding: 12px 12px 18px;
+  }
+
+  .lightbox-img-wrapper {
+    max-height: 320px;
   }
 }
 
