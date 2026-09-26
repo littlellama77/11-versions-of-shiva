@@ -67,21 +67,15 @@ window.BOOK_DATA = {
       photos: [
         {
           id: "siddhi-photo-1",
-          label: "SIDDHI PHOTO 1",
+          label: "SIDDHI & SHIVA",
           caption: "rainy momo quest (complete drenching)",
-          src: ""
+          src: "assets/images/siddhi-1.jpg"
         },
         {
           id: "siddhi-photo-2",
-          label: "SIDDHI PHOTO 2",
-          caption: "6 ice creams, 1 was good",
-          src: ""
-        },
-        {
-          id: "siddhi-photo-3",
-          label: "SIDDHI PHOTO 3",
-          caption: "cricket match day doing nothing",
-          src: ""
+          label: "FOODIE DUO",
+          caption: "6 ice creams & pure chaotic fun",
+          src: "assets/images/siddhi-2.jpg"
         }
       ],
       letterText: `Happiest birthday shivaaahh aka acchi waali bojack horseman!
