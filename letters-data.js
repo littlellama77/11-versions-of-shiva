@@ -223,15 +223,9 @@ Happiest Birthday, stay whimsy, stay dumb, stay rocking drop shoulder tees, hate
       photos: [
         {
           id: "vibu-photo-1",
-          label: "VIBU PHOTO 1",
-          caption: "fun scooty rides with mani 🛵",
-          src: ""
-        },
-        {
-          id: "vibu-photo-2",
-          label: "VIBU PHOTO 2",
-          caption: "EXHIBIT A: cake murder crime scene 🎂",
-          src: ""
+          label: "EXHIBIT A: THE DEAL",
+          caption: "undercover shagun deal & dama pehlwan vibes 💵✨",
+          src: "assets/images/vibu-1.jpg"
         }
       ],
       letterText: `Dama pehlwan happy birthday wish you all the best for your future  I remember all the fun scooty rides with you and mani aur jb bhi apan sath mai hote h to maza toh atta hi h and it is so amazing of you that you make everyone laugh aur mujhe lagta h pure group mai sabse acha sense of humour tera hi h 😂 may all your career dream comes true ,
