@@ -421,8 +421,8 @@ HAPPIEST 18TH BIRTHDAY MY LOVE, FINALLY LEGAL ADULT`
     {
       id: "mahima",
       number: "10",
-      name: "MAHIMA",
-      displayName: "MAHIMA",
+      name: "MAHIMA (Manulbi)",
+      displayName: "MAHIMA\n(Manulbi)",
       subtitle: "From the very beginning",
       motifs: ["childhood photographs", "family", "old scrapbook", "childhood → now"],
       annotations: [
@@ -439,21 +439,27 @@ HAPPIEST 18TH BIRTHDAY MY LOVE, FINALLY LEGAL ADULT`
       photos: [
         {
           id: "mahima-photo-1",
-          label: "MAHIMA PHOTO 1",
-          caption: "when Mumma brought you home 👶",
-          src: ""
+          label: "ASAL MEIN MERA BHAI",
+          caption: "holding hands & laughing till our stomachs hurt ♡",
+          src: "assets/images/mahima-1.jpg"
         },
         {
           id: "mahima-photo-2",
-          label: "MAHIMA PHOTO 2",
-          caption: "the bite mark & chin fatt era",
-          src: ""
+          label: "ROOFTOP NIGHTS",
+          caption: "city lights, washroom sign aesthetic & late talks ✨",
+          src: "assets/images/mahima-2.jpg"
         },
         {
           id: "mahima-photo-3",
-          label: "MAHIMA PHOTO 3",
-          caption: "from the very beginning to now ❤️",
-          src: ""
+          label: "HEARTS & MEMORIES",
+          caption: "from the very beginning to every universe ❤️",
+          src: "assets/images/mahima-3.jpg"
+        },
+        {
+          id: "mahima-photo-4",
+          label: "DEFINITION OF PERFECT",
+          caption: "real happy times from now on ☕🥂",
+          src: "assets/images/mahima-4.jpg"
         }
       ],
       letterText: `Hello Akku,
