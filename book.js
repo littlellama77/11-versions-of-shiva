@@ -120,7 +120,6 @@
   const coverOpenBtn = document.getElementById('coverOpenBtn');
   const readAgainBtn = document.getElementById('readAgainBtn');
   const headerHomeBtn = document.getElementById('headerHomeBtn');
-  const bookRibbon = document.getElementById('bookRibbon');
   const confettiCanvas = document.getElementById('confettiCanvas');
 
   // Atmosphere & Sound Controls
@@ -1401,17 +1400,6 @@
   document.addEventListener('fullscreenchange', () => {
     fullscreenIcon.textContent = document.fullscreenElement ? '✕' : '⛶';
   });
-
-  // Ribbon Bookmark Interaction
-  if (bookRibbon) {
-    bookRibbon.addEventListener('click', () => {
-      if (currentPage === 0) {
-        goToPage(1, 'next'); // Go to TOC
-      } else {
-        goToPage(1, 'prev'); // Bookmark back to Contents
-      }
-    });
-  }
 
   // Branding home button
   headerHomeBtn.addEventListener('click', () => goToPage(0, 'prev'));
