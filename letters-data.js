@@ -495,21 +495,21 @@ You know who. ❤️`
       photos: [
         {
           id: "garima-photo-1",
-          label: "GARIMA PHOTO 1",
-          caption: "when you were actually smol 🍼",
-          src: ""
+          label: "WEREN'T YOU JUST SMOL?",
+          caption: "throwback childhood smiles ♡",
+          src: "assets/images/gorzumo-1.jpg"
         },
         {
           id: "garima-photo-2",
-          label: "GARIMA PHOTO 2",
-          caption: "7 feet Khali inhabiting the same 5 rooms 24/7",
-          src: ""
+          label: "BICEP SQUAD",
+          caption: "mirror flex with the girls 💪",
+          src: "assets/images/gorzumo-2.jpg"
         },
         {
           id: "garima-photo-3",
-          label: "GARIMA PHOTO 3",
-          caption: "Dehradun days & memories we won't forget ❤️",
-          src: ""
+          label: "FUTURE CO-OWNERS",
+          caption: "cafe gossip & sweet cravings ☕🍰",
+          src: "assets/images/gorzumo-3.jpg"
         }
       ],
       letterText: `Okay so… uhhhh kahan se start karu…
