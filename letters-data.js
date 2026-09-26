@@ -68,13 +68,13 @@ window.BOOK_DATA = {
         {
           id: "siddhi-photo-1",
           label: "SIDDHI & SHIVA",
-          caption: "rainy momo quest (complete drenching)",
+          caption: "all dressed up together ♡",
           src: "assets/images/siddhi-1.jpg"
         },
         {
           id: "siddhi-photo-2",
-          label: "FOODIE DUO",
-          caption: "6 ice creams & pure chaotic fun",
+          label: "HOODIE TWINS",
+          caption: "matching hoodies & mirror selfies 🤳",
           src: "assets/images/siddhi-2.jpg?v=2"
         }
       ],
