@@ -324,15 +324,15 @@ Agrima Kothiyal
       photos: [
         {
           id: "chitleen-photo-1",
-          label: "CHITLEEN PHOTO 1",
-          caption: "mera rassgulle moments 🍬",
-          src: ""
+          label: "CHITLEEN & SHIVA",
+          caption: "mera rassgulle moments 🌸",
+          src: "assets/images/chitleen-1.jpg"
         },
         {
           id: "chitleen-photo-2",
-          label: "CHITLEEN PHOTO 2",
-          caption: "hizru boi bakchodi squad 😈",
-          src: ""
+          label: "HIZRU BOI SQUAD",
+          caption: "enough money to feed me 🤞🏿🤞🏿",
+          src: "assets/images/chitleen-2.jpg"
         }
       ],
       letterText: `HAPPY BIRTHDAY TU TU MERA RASSGULLE
