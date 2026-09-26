@@ -14,7 +14,35 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Patrick+Hand&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=20260926_04">
+  <style>
+    /* Critical Book Layout Enforcement - Guaranteed Override of any Cached CSS */
+    .book-container {
+      display: block !important;
+      position: relative !important;
+      overflow: hidden !important;
+    }
+    .book-view {
+      display: none !important;
+      width: 100% !important;
+      height: 100% !important;
+    }
+    .book-view.active {
+      display: flex !important;
+    }
+    #viewCover {
+      display: flex !important;
+    }
+    #viewToc, #viewChapter, #viewFinal {
+      display: none !important;
+    }
+    #viewToc.active, #viewChapter.active, #viewFinal.active {
+      display: flex !important;
+    }
+    #viewCover:not(.active) {
+      display: none !important;
+    }
+  </style>
 </head>
 <body>
 
@@ -82,7 +110,7 @@
       <div class="ribbon-bookmark" id="bookRibbon" title="Keepsake Ribbon Bookmark"></div>
 
       <!-- ================= PAGE 0: COVER / LANDING ================= -->
-      <section class="book-view view-cover active" id="viewCover" aria-label="Book Cover">
+      <section class="book-view view-cover active" id="viewCover" style="display: flex !important;" aria-label="Book Cover">
         <div class="cover-frame">
           <div class="cover-corner tl"></div>
           <div class="cover-corner tr"></div>
@@ -124,7 +152,7 @@
       </section>
 
       <!-- ================= PAGE 1: CONTENTS SPREAD ================= -->
-      <section class="book-view view-toc" id="viewToc" aria-label="Table of Contents">
+      <section class="book-view view-toc" id="viewToc" style="display: none !important;" aria-label="Table of Contents">
         <div class="toc-spread">
           <!-- TOC Left Page (Chapters 01 to 06) -->
           <div class="page-left toc-left-page">
@@ -154,7 +182,7 @@
       </section>
 
       <!-- ================= DYNAMIC CHAPTER SPREAD ================= -->
-      <section class="book-view view-chapter" id="viewChapter" aria-label="Letter Spread">
+      <section class="book-view view-chapter" id="viewChapter" style="display: none !important;" aria-label="Letter Spread">
         <!-- Mobile tab switcher (only visible on mobile screens) -->
         <div class="mobile-view-tabs" id="mobileTabs" aria-label="Mobile View Toggle">
           <button class="mobile-tab-btn active" id="tabScrapbookBtn" data-target="left">📸 Scrapbook</button>
@@ -173,7 +201,7 @@
       </section>
 
       <!-- ================= FINAL PAGE: EPILOGUE ================= -->
-      <section class="book-view view-final" id="viewFinal" aria-label="The End Page">
+      <section class="book-view view-final" id="viewFinal" style="display: none !important;" aria-label="The End Page">
         <div class="final-card">
           <h2 class="final-title">THE END ♡</h2>
           <div class="final-subtitle">Except not really.</div>
@@ -396,8 +424,8 @@
   <input type="file" id="importPhotosInput" accept=".json,application/json" style="display:none;" aria-hidden="true">
   <input type="file" id="importLettersInput" accept=".json,application/json" style="display:none;" aria-hidden="true">
 
-  <!-- Core Scripts -->
-  <script src="letters-data.js"></script>
-  <script src="book.js"></script>
+  <!-- Core Scripts with Cache-Busting Version -->
+  <script src="letters-data.js?v=20260926_04"></script>
+  <script src="book.js?v=20260926_04"></script>
 </body>
 </html>

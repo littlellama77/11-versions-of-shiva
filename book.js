@@ -435,8 +435,13 @@
     const totalPages = getTotalPages();
     const epilogueIndex = totalPages - 1;
 
-    // Reset views
-    [viewCover, viewToc, viewChapter, viewFinal].forEach(v => v.classList.remove('active'));
+    // Reset views: hide all views with both class and explicit inline style
+    [viewCover, viewToc, viewChapter, viewFinal].forEach(v => {
+      if (v) {
+        v.classList.remove('active');
+        v.style.setProperty('display', 'none', 'important');
+      }
+    });
 
     // Navigation buttons state
     prevBtn.disabled = (currentPage === 0);
@@ -449,16 +454,20 @@
     // Activate the appropriate view
     if (currentPage === 0) {
       viewCover.classList.add('active');
+      viewCover.style.setProperty('display', 'flex', 'important');
     } else if (currentPage === 1) {
       viewToc.classList.add('active');
+      viewToc.style.setProperty('display', 'flex', 'important');
     } else if (currentPage >= 2 && currentPage < epilogueIndex) {
       const chapterIndex = currentPage - 2;
       renderChapterSpread(chapterIndex);
       viewChapter.classList.add('active');
+      viewChapter.style.setProperty('display', 'flex', 'important');
       setMobileActiveTab('left');
     } else if (currentPage === epilogueIndex) {
       renderFinalPage();
       viewFinal.classList.add('active');
+      viewFinal.style.setProperty('display', 'flex', 'important');
       triggerConfetti();
     }
 
