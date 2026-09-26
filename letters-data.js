@@ -177,15 +177,15 @@ Blessed with  !!!! A BESTFRIEND!!!! Like you  HAPPY BIRTHDAY TO THE REAL LIFE GE
       photos: [
         {
           id: "atulya-photo-1",
-          label: "ATULYA PHOTO 1",
-          caption: "shaam ko basketball era 🏀",
-          src: ""
+          label: "STAY WHIMSY, STAY DUMB",
+          caption: "giggling until we can't breathe & unc gang vibes 🤭",
+          src: "assets/images/atulya-1.jpg"
         },
         {
           id: "atulya-photo-2",
-          label: "ATULYA PHOTO 2",
-          caption: "founders bakchodi & unc gang 🏆",
-          src: ""
+          label: "SCHOOL TRIP & FOUNDERS",
+          caption: "school memories, shades & lifelong bakchodi 🕶️🧢",
+          src: "assets/images/atulya-2.jpg"
         }
       ],
       letterText: `Happyyyy Birthdayyy Shivaaaa!!!!
