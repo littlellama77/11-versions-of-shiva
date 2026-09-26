@@ -105,15 +105,15 @@ You deserve it alll`
       photos: [
         {
           id: "parakh-photo-1",
-          label: "PARAKH PHOTO 1",
+          label: "PARAKH & SHIVA",
           caption: "8 years of unbreakable bakchodi 🩷",
-          src: ""
+          src: "assets/images/parakh-1.jpg"
         },
         {
           id: "parakh-photo-2",
-          label: "PARAKH PHOTO 2",
-          caption: "off-roading & scooty dhakka squad 🛵",
-          src: ""
+          label: "WATER BABIES",
+          caption: "always sticking by each other 🫶🏼",
+          src: "assets/images/parakh-2.jpg"
         }
       ],
       letterText: `happiest18thmylove 🩷
