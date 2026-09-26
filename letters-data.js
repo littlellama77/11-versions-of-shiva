@@ -387,15 +387,15 @@ HAPPIEST 18TH BIRTHDAY MY LOVE, FINALLY LEGAL ADULT`
       photos: [
         {
           id: "ridhima-photo-1",
-          label: "RIDHIMA PHOTO 1",
-          caption: "laughing till our stomachs hurt 😆",
-          src: ""
+          label: "SMOL SHIVA ERA",
+          caption: "smaller than me, but the biggest place in my heart ♡",
+          src: "assets/images/ridhima-1.jpg"
         },
         {
           id: "ridhima-photo-2",
-          label: "RIDHIMA PHOTO 2",
-          caption: "future crorepatni in the making 💵",
-          src: ""
+          label: "FUTURE CROREPATNI",
+          caption: "cute, crazy & crorepati bapu se bhi zyada 💰✨",
+          src: "assets/images/ridhima-2.jpg"
         }
       ],
       letterText: `You may be smaller than me, but you hold such a big place in my heart. I’m so grateful to have you in my life. All the little moments spent with you always laughing till our stomachs hurt. I wish you the best for your future and may you become a crorepatni, bapu se bhi zyada. I hope you always stay the same cute, crazy, loving person you are and get all the happiness you deserve.Happy birthday beautiful 😘`
