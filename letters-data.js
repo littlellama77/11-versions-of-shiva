@@ -259,21 +259,15 @@ Happiest Birthday, stay whimsy, stay dumb, stay rocking drop shoulder tees, hate
       photos: [
         {
           id: "agrima-photo-1",
-          label: "AGRIMA PHOTO 1",
-          caption: "meri pyaare gulab jamun & rasbhari",
-          src: ""
+          label: "FLOWERS & SUNSHINE",
+          caption: "meri pyaari gulab jamun & rasbhari 🌼",
+          src: "assets/images/agrima-1.jpg"
         },
         {
           id: "agrima-photo-2",
-          label: "AGRIMA PHOTO 2",
-          caption: "beech sadak pe dance & vyanjan sneak-in",
-          src: ""
-        },
-        {
-          id: "agrima-photo-3",
-          label: "AGRIMA PHOTO 3",
-          caption: "fuck ass sleepovers & Supernatural thirst 🥀",
-          src: ""
+          label: "DRESSED UP DAYS",
+          caption: "since party dresses, balloons & childhood days ♡",
+          src: "assets/images/agrima-2.jpg"
         }
       ],
       letterText: `Mere Pyaare Gulab Jamun,
