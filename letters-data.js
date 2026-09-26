@@ -143,15 +143,15 @@ i wish, you achieve everything in your life because you deserve it all 🫶🏼 
       photos: [
         {
           id: "amogh-photo-1",
-          label: "AMOGH PHOTO 1",
-          caption: "more sunshine than person ☀️",
-          src: ""
+          label: "AMOGH & SHIVA",
+          caption: "more sunshine than a person ☀️",
+          src: "assets/images/amogh-1.jpg"
         },
         {
           id: "amogh-photo-2",
-          label: "AMOGH PHOTO 2",
-          caption: "stupid jokes & unforgettable moments 🩵",
-          src: ""
+          label: "DRAMA & DANCE DUO",
+          caption: "real-life gem & bestfriend 🩵",
+          src: "assets/images/amogh-2.jpg"
         }
       ],
       letterText: `Shivaaaaaaaaaaa Happppppppyyyyy BIRTHDAY hai dosttttt ko !!!!YOU ARE 18 !!!!! I wish you good health , prosperity and abundant success ! Every minute spent with you is the best , you are more of a sunshine than a person , , I really hope you know how special you are and how grateful I am to have you in my life. From all the random conversations and stupid jokes to the little moments that probably seemed insignificant at the time, there are so many memories with you that I’ll always look back on with a smile.
