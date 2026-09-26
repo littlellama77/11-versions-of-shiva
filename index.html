@@ -9,12 +9,16 @@
   <!-- Favicon / Emoji Icon -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📖</text></svg>">
 
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+
   <!-- Google Fonts: Cormorant Garamond, Playfair Display, Lora, Caveat, Patrick Hand, Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Patrick+Hand&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=20260926_22">
+  <link rel="stylesheet" href="style.css?v=20260926_no_ribbon_v3">
   <style>
     /* Critical Book Layout Enforcement - Guaranteed Override of any Cached CSS */
     .book-container {
@@ -41,6 +45,18 @@
     }
     #viewCover:not(.active) {
       display: none !important;
+    }
+
+    /* Absolute removal of ribbon bookmark */
+    .book-ribbon-bookmark,
+    [class*="ribbon-bookmark"],
+    .ribbon {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      width: 0 !important;
+      height: 0 !important;
+      pointer-events: none !important;
     }
   </style>
 </head>
@@ -96,9 +112,6 @@
   <!-- Main Stage / Digital Book -->
   <main class="book-stage" role="main">
     <div class="book-container" id="bookContainer">
-      <!-- Satin Silk Ribbon Bookmark -->
-      <div class="book-ribbon-bookmark" aria-hidden="true" title="Keepsake Silk Ribbon"></div>
-
       <!-- ================= PAGE 0: COVER / LANDING ================= -->
       <section class="book-view view-cover active" id="viewCover" style="display: flex !important;" aria-label="Book Cover">
         <div class="cover-frame">
@@ -301,7 +314,7 @@
   </div>
 
   <!-- Core Scripts with Cache-Busting Version -->
-  <script src="letters-data.js?v=20260926_23"></script>
-  <script src="book.js?v=20260926_23"></script>
+  <script src="letters-data.js?v=20260926_no_ribbon_v3"></script>
+  <script src="book.js?v=20260926_no_ribbon_v3"></script>
 </body>
 </html>

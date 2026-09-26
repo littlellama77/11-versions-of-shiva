@@ -1268,21 +1268,6 @@ img[src*="keepsake-final"] { object-position: center 48% !important; }
   letter-spacing: 0.05em;
 }
 
-/* Silk Ribbon Bookmark on Top of Book */
-.book-ribbon-bookmark {
-  position: absolute;
-  top: -6px;
-  right: 140px;
-  width: 28px;
-  height: 80px;
-  background: linear-gradient(135deg, #a8323e 0%, #82222c 50%, #5c141c 100%);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
-  z-index: 50;
-  pointer-events: none;
-  border-radius: 2px 2px 0 0;
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 82%, 0 100%);
-}
-
 /* ==========================================================================
    FINAL PAGE / EPILOGUE VIEW
    ========================================================================== */
@@ -2506,4 +2491,16 @@ body.theme-candlelight::before {
     display: flex !important;
     page-break-after: always;
   }
+}
+
+/* Ensure Ribbon Bookmark is permanently removed and cannot render */
+.book-ribbon-bookmark,
+[class*="ribbon-bookmark"],
+.ribbon {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  pointer-events: none !important;
 }

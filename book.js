@@ -19,6 +19,19 @@
     // Ignore storage errors
   }
 
+  // Actively remove any ribbon elements if lingering in DOM/cache
+  function purgeRibbon() {
+    try {
+      const ribbons = document.querySelectorAll('.book-ribbon-bookmark, [class*="ribbon-bookmark"], .ribbon');
+      ribbons.forEach(el => el.remove());
+    } catch (e) {}
+  }
+  purgeRibbon();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', purgeRibbon);
+  }
+  window.addEventListener('load', purgeRibbon);
+
   // --- State Variables ---
   let currentPage = 0; // 0: Cover, 1: TOC, 2..N+1: Chapters, N+2: Epilogue
   let soundEnabled = false;
@@ -335,6 +348,7 @@
 
   // --- Navigation & View Management ---
   function updateView(direction = 'none') {
+    purgeRibbon();
     const chapters = getActiveChapters();
     const totalPages = getTotalPages();
     const epilogueIndex = totalPages - 1;
