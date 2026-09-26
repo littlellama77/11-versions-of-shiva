@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>11 Versions of Shiva — 18th Birthday Keepsake Book</title>
+  <meta name="description" content="A private 18th birthday digital keepsake book for Shiva. 11 people. 11 memories. One very loved idiot.">
+  
+  <!-- Favicon / Emoji Icon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📖</text></svg>">
+
+  <!-- Google Fonts: Cormorant Garamond, Playfair Display, Lora, Caveat, Patrick Hand, Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Patrick+Hand&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Confetti Canvas for Festive Celebrations -->
+  <canvas id="confettiCanvas" class="confetti-canvas" aria-hidden="true"></canvas>
+
+  <!-- Subtle Paper Texture Overlay -->
+  <div class="paper-grain-overlay" aria-hidden="true"></div>
+
+  <!-- Persistent Site Header -->
+  <header class="site-header" role="banner">
+    <div class="book-branding" id="headerHomeBtn" title="Go to cover">
+      <span class="brand-icon">♡</span>
+      <span class="brand-title">11 Versions of Shiva</span>
+      <span class="brand-badge">18th Birthday</span>
+    </div>
+
+    <div class="header-actions">
+      <!-- Reading Atmosphere Toggle -->
+      <button class="header-btn" id="atmosphereToggleBtn" title="Switch reading atmosphere (Desk / Candlelight / Midnight)" aria-label="Toggle atmosphere">
+        <span id="atmosphereIcon">🕯️</span> <span id="atmosphereLabel">Candlelight</span>
+      </button>
+
+      <!-- Ambient Lo-Fi Music Box Toggle -->
+      <button class="header-btn" id="musicToggleBtn" title="Play gentle lo-fi music box ambient chime" aria-label="Toggle music box">
+        <span id="musicIcon">🎵</span> <span id="musicLabel">Music</span>
+      </button>
+
+      <!-- Audio Toggle Button (Paper rustle) -->
+      <button class="header-btn" id="soundToggleBtn" title="Toggle gentle page turn rustle sound" aria-label="Toggle page turn sound">
+        <span id="soundIcon">🔇</span> <span id="soundLabel">Rustle Off</span>
+      </button>
+
+      <!-- Letters / Memories Manager -->
+      <button class="header-btn" id="openLettersBtn" title="Edit letters, add personal memories, or export" aria-label="Manage letters">
+        <span>✍️</span> <span>Letters</span>
+      </button>
+
+      <!-- Photo Manager Button -->
+      <button class="header-btn" id="openPhotosBtn" title="Add or replace photos in placeholders" aria-label="Manage photos">
+        <span>📷</span> <span>Photos</span>
+      </button>
+
+      <!-- Persistent Table of Contents Button -->
+      <button class="header-btn btn-toc" id="openTocBtn" title="Open Table of Contents (T)" aria-label="Open Table of Contents">
+        <span>☰</span> <span>CONTENTS</span>
+      </button>
+
+      <!-- Fullscreen Toggle -->
+      <button class="header-btn btn-icon-only" id="fullscreenToggleBtn" title="Toggle Fullscreen (F)" aria-label="Toggle Fullscreen">
+        <span id="fullscreenIcon">⛶</span>
+      </button>
+
+      <!-- Keyboard Shortcuts Help -->
+      <button class="header-btn btn-icon-only" id="openShortcutsBtn" title="Keyboard Shortcuts (?)" aria-label="Keyboard Shortcuts">
+        <span>⌨</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Stage / Digital Book -->
+  <main class="book-stage" role="main">
+    <div class="book-container" id="bookContainer">
+      <!-- Silk Ribbon Bookmark hanging down center spine -->
+      <div class="ribbon-bookmark" id="bookRibbon" title="Keepsake Ribbon Bookmark"></div>
+
+      <!-- ================= PAGE 0: COVER / LANDING ================= -->
+      <section class="book-view view-cover active" id="viewCover" aria-label="Book Cover">
+        <div class="cover-frame">
+          <div class="cover-corner tl"></div>
+          <div class="cover-corner tr"></div>
+          <div class="cover-corner bl"></div>
+          <div class="cover-corner br"></div>
+
+          <div class="cover-header-meta">
+            A Keepsake Edition · September 2026
+          </div>
+
+          <div class="cover-main-content">
+            <h1 class="cover-main-title">
+              11 VERSIONS
+              <span class="of-word">of</span>
+              SHIVA
+            </h1>
+
+            <div class="cover-subtitle">
+              A little book of letters<br>for your 18th birthday ♡
+            </div>
+
+            <div class="cover-divider"></div>
+
+            <div class="cover-tagline">
+              11 people.<br>
+              11 memories.<br>
+              One very loved idiot.
+            </div>
+
+            <button class="cover-open-btn" id="coverOpenBtn" aria-label="Open the book">
+              OPEN THE BOOK &rarr;
+            </button>
+          </div>
+
+          <div class="cover-footer-note">
+            Made with love by family & friends · Turn pages with arrow keys
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= PAGE 1: CONTENTS SPREAD ================= -->
+      <section class="book-view view-toc" id="viewToc" aria-label="Table of Contents">
+        <div class="toc-spread">
+          <!-- TOC Left Page (Chapters 01 to 06) -->
+          <div class="page-left toc-left-page">
+            <div class="toc-header">
+              <h2>CONTENTS</h2>
+              <p>11 people. 11 versions of you.</p>
+            </div>
+            <nav class="toc-list" id="tocListLeft" aria-label="Chapters 1 to 6"></nav>
+          </div>
+
+          <!-- TOC Right Page (Chapters 07 to 11 + Epilogue) -->
+          <div class="page-right toc-right-page">
+            <div class="toc-header">
+              <h2>& MORE</h2>
+              <p>Growing up & staying you.</p>
+            </div>
+            <nav class="toc-list" id="tocListRight" aria-label="Chapters 7 to 11"></nav>
+
+            <div class="toc-illustration-box">
+              <div class="tape-top"></div>
+              <p style="font-family: var(--font-handwriting); font-size: 1.3rem; color: #43392f;">
+                “Every letter here is completely untouched. Every chaotic thought, memory, and inside joke — preserved just for you.”
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= DYNAMIC CHAPTER SPREAD ================= -->
+      <section class="book-view view-chapter" id="viewChapter" aria-label="Letter Spread">
+        <!-- Mobile tab switcher (only visible on mobile screens) -->
+        <div class="mobile-view-tabs" id="mobileTabs" aria-label="Mobile View Toggle">
+          <button class="mobile-tab-btn active" id="tabScrapbookBtn" data-target="left">📸 Scrapbook</button>
+          <button class="mobile-tab-btn" id="tabLetterBtn" data-target="right">💌 Letter</button>
+        </div>
+
+        <!-- Left Page: Scrapbook Visuals & Polaroids -->
+        <div class="page-left" id="chapterPageLeft">
+          <!-- Injected via JavaScript -->
+        </div>
+
+        <!-- Right Page: The Letter -->
+        <div class="page-right" id="chapterPageRight">
+          <!-- Injected via JavaScript -->
+        </div>
+      </section>
+
+      <!-- ================= FINAL PAGE: EPILOGUE ================= -->
+      <section class="book-view view-final" id="viewFinal" aria-label="The End Page">
+        <div class="final-card">
+          <h2 class="final-title">THE END ♡</h2>
+          <div class="final-subtitle">Except not really.</div>
+
+          <!-- Final Photo Frame -->
+          <div class="final-photo-frame" id="finalPhotoCard" title="Click to replace photo">
+            <div class="washi-tape"></div>
+            <div class="polaroid-photo-frame" id="finalPhotoFrame">
+              <div class="polaroid-placeholder-inner">
+                <span class="placeholder-icon">📸</span>
+                <span class="placeholder-label">SHIVA & EVERYONE</span>
+                <span class="placeholder-action">+ Add Keepsake Photo</span>
+              </div>
+            </div>
+            <div class="polaroid-caption">All 11 versions of you ♡</div>
+          </div>
+
+          <div class="final-message">
+            11 people.<br>
+            11 memories.<br>
+            11 different versions of you.<br><br>
+            And somehow,<br>
+            all of them are you.
+          </div>
+
+          <div class="final-closing">
+            Happy 18th, Shiva. ❤️
+          </div>
+
+          <button class="final-read-btn" id="readAgainBtn" aria-label="Read the book again">
+            READ AGAIN ↺
+          </button>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Persistent Bottom Controls Bar -->
+  <footer class="site-footer" role="contentinfo">
+    <button class="nav-btn" id="prevBtn" title="Previous page (Left arrow)" aria-label="Previous Page">
+      <span>←</span> <span>PREVIOUS</span>
+    </button>
+
+    <div class="nav-center-info">
+      <div class="nav-page-label" id="pageLabelIndicator">COVER</div>
+      <div class="chapter-dots" id="chapterDotsContainer" aria-label="Chapter jump dots"></div>
+      <div class="nav-keys-hint">Use ← / → keys to flip pages</div>
+    </div>
+
+    <button class="nav-btn" id="nextBtn" title="Next page (Right arrow)" aria-label="Next Page">
+      <span>NEXT</span> <span>→</span>
+    </button>
+  </footer>
+
+  <!-- ================= TABLE OF CONTENTS MODAL DRAWER ================= -->
+  <div class="modal-overlay" id="tocModal" role="dialog" aria-modal="true" aria-labelledby="tocModalTitle">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="tocModalTitle">Table of Contents</h3>
+        <button class="modal-close-btn" id="closeTocModalBtn" aria-label="Close Table of Contents">✕</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-family: var(--font-handwriting); font-size: 1.25rem; color: var(--accent-rose); margin-bottom: 16px;">
+          11 people. 11 versions of you. Click any letter to jump right in:
+        </p>
+        <div class="toc-list" id="modalTocList"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= PHOTO MANAGEMENT / UPLOADER MODAL ================= -->
+  <div class="modal-overlay" id="photosModal" role="dialog" aria-modal="true" aria-labelledby="photosModalTitle">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="photosModalTitle">📷 Scrapbook Photos</h3>
+        <button class="modal-close-btn" id="closePhotosModalBtn" aria-label="Close photos dialog">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="instructions-callout">
+          <strong>How to add real photos:</strong><br>
+          • <strong>Quick Upload (Right now in browser):</strong> Click “Choose Photo” on any slot below to select an image from your computer. It will immediately show up in the scrapbook polaroid frame!<br>
+          • <strong>Permanent Files:</strong> You can also copy your pictures into the <code>assets/images/</code> folder and update filenames in <code>letters-data.js</code>.<br>
+          • Even without photos, elegant placeholder sketches will display automatically.
+        </div>
+
+        <div class="photo-modal-actions">
+          <div class="photo-backup-group">
+            <button class="photo-action-btn" id="exportPhotosBtn" title="Export all photos to a backup file">
+              💾 Backup Photos (JSON)
+            </button>
+            <button class="photo-action-btn" id="importPhotosBtn" title="Restore photos from a backup file">
+              📂 Restore Backup
+            </button>
+          </div>
+          <button class="photo-clear-btn" id="resetAllPhotosBtn" style="font-weight: 600;">
+            ↺ Reset All to Default Placeholders
+          </button>
+        </div>
+
+        <div class="photo-slot-grid" id="photoSlotGrid"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= LETTERS / MEMORIES EDITOR MODAL ================= -->
+  <div class="modal-overlay" id="lettersModal" role="dialog" aria-modal="true" aria-labelledby="lettersModalTitle">
+    <div class="modal-content modal-content-wide">
+      <div class="modal-header">
+        <h3 id="lettersModalTitle">✍️ Edit Letters & Memories</h3>
+        <button class="modal-close-btn" id="closeLettersModalBtn" aria-label="Close letters editor">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="instructions-callout">
+          <strong>Customize or Add Memories:</strong><br>
+          Select any chapter to modify the author, memory theme, handwritten notes, or letter text. All changes are saved automatically in your browser so you can preview them immediately!
+        </div>
+
+        <div class="editor-chapter-bar">
+          <label for="lettersChapterSelect"><strong>Select Chapter / Memory:</strong></label>
+          <div class="editor-select-row">
+            <select id="lettersChapterSelect" class="editor-select"></select>
+            <button class="photo-action-btn" id="addNewChapterBtn" title="Add an extra keepsake chapter">
+              ➕ Add New Memory
+            </button>
+          </div>
+        </div>
+
+        <div class="editor-form-grid">
+          <div class="editor-field">
+            <label for="editAuthorName"><strong>Author / Person Name:</strong></label>
+            <input type="text" id="editAuthorName" class="editor-input" placeholder="e.g. SIDDHI">
+          </div>
+
+          <div class="editor-field">
+            <label for="editSubtitle"><strong>Subtitle / Memory Theme:</strong></label>
+            <input type="text" id="editSubtitle" class="editor-input" placeholder="e.g. Momos in the rain">
+          </div>
+
+          <div class="editor-field full-width">
+            <label for="editHighlight"><strong>Highlighted Scrapbook Quote:</strong></label>
+            <input type="text" id="editHighlight" class="editor-input" placeholder="e.g. voh baarish waala din...">
+          </div>
+
+          <div class="editor-field full-width">
+            <label for="editAnnotations"><strong>Scrapbook Sticky Notes (comma-separated):</strong></label>
+            <input type="text" id="editAnnotations" class="editor-input" placeholder="e.g. momo dedication, 6 ice creams, bestie vibe">
+          </div>
+
+          <div class="editor-field full-width">
+            <label for="editLetterText"><strong>Letter Text (Preserves every word, emoji, & line break):</strong></label>
+            <textarea id="editLetterText" class="editor-textarea" rows="9" placeholder="Write or paste letter content here..."></textarea>
+          </div>
+        </div>
+
+        <div class="editor-footer-actions">
+          <div class="editor-main-btns">
+            <button class="btn-primary" id="saveLetterBtn">💾 Save Letter Changes</button>
+            <button class="btn-secondary" id="revertLetterBtn">↺ Revert Current to Default</button>
+          </div>
+          <div class="editor-backup-btns">
+            <button class="btn-secondary" id="exportLettersJsonBtn" title="Download updated book data as JSON">📥 Export Book (JSON)</button>
+            <button class="btn-secondary" id="importLettersJsonBtn" title="Upload a JSON file of letters">📤 Import Book (JSON)</button>
+            <button class="btn-secondary" id="copyLettersCodeBtn" title="Copy code formatted for letters-data.js">📋 Copy Code</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= HIGH-RES POLAROID LIGHTBOX MODAL ================= -->
+  <div class="modal-overlay modal-lightbox" id="lightboxModal" role="dialog" aria-modal="true" aria-label="Photo Lightbox">
+    <div class="lightbox-container">
+      <button class="modal-close-btn lightbox-close-btn" id="closeLightboxBtn" aria-label="Close photo preview">✕</button>
+      <div class="lightbox-polaroid">
+        <div class="washi-tape"></div>
+        <div class="lightbox-img-wrapper" id="lightboxImgWrapper">
+          <!-- Injected dynamically -->
+        </div>
+        <div class="lightbox-meta">
+          <div class="lightbox-person" id="lightboxPerson"></div>
+          <div class="lightbox-caption" id="lightboxCaption"></div>
+        </div>
+      </div>
+      <div class="lightbox-actions">
+        <button class="lightbox-action-btn" id="lightboxReplaceBtn">📷 Replace Photo</button>
+        <button class="lightbox-action-btn" id="lightboxDownloadBtn">⬇️ Download Photo</button>
+        <button class="lightbox-action-btn btn-danger" id="lightboxRemoveBtn">🗑️ Remove Photo</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= KEYBOARD SHORTCUTS MODAL ================= -->
+  <div class="modal-overlay" id="shortcutsModal" role="dialog" aria-modal="true" aria-labelledby="shortcutsModalTitle">
+    <div class="modal-content modal-content-sm">
+      <div class="modal-header">
+        <h3 id="shortcutsModalTitle">⌨ Keyboard Shortcuts</h3>
+        <button class="modal-close-btn" id="closeShortcutsModalBtn" aria-label="Close shortcuts">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="shortcuts-grid">
+          <div class="shortcut-row"><kbd>→</kbd> or <kbd>Space</kbd> <span>Next Page</span></div>
+          <div class="shortcut-row"><kbd>←</kbd> <span>Previous Page</span></div>
+          <div class="shortcut-row"><kbd>Home</kbd> / <kbd>End</kbd> <span>Cover / Epilogue</span></div>
+          <div class="shortcut-row"><kbd>T</kbd> <span>Table of Contents</span></div>
+          <div class="shortcut-row"><kbd>P</kbd> <span>Scrapbook Photos</span></div>
+          <div class="shortcut-row"><kbd>L</kbd> <span>Letters & Memories Editor</span></div>
+          <div class="shortcut-row"><kbd>M</kbd> <span>Toggle Ambient Music Box</span></div>
+          <div class="shortcut-row"><kbd>A</kbd> <span>Switch Atmosphere (Candlelight / Desk)</span></div>
+          <div class="shortcut-row"><kbd>F</kbd> <span>Toggle Fullscreen</span></div>
+          <div class="shortcut-row"><kbd>?</kbd> <span>Open this help dialog</span></div>
+          <div class="shortcut-row"><kbd>Esc</kbd> <span>Close any dialog</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hidden File Inputs -->
+  <input type="file" id="directPhotoInput" accept="image/*" class="photo-upload-input" aria-hidden="true">
+  <input type="file" id="importPhotosInput" accept=".json,application/json" style="display:none;" aria-hidden="true">
+  <input type="file" id="importLettersInput" accept=".json,application/json" style="display:none;" aria-hidden="true">
+
+  <!-- Core Scripts -->
+  <script src="letters-data.js"></script>
+  <script src="book.js"></script>
+</body>
+</html>
